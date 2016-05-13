@@ -21,7 +21,10 @@ require.config({
 	}
 });
 
-require(['main'], function (App)
+require(['main', 'backbone'], function (App, Backbone)
 {
 	window.App = App;
+
+	new App.Router();
+	Backbone.history.start();
 });

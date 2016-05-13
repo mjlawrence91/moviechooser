@@ -4,11 +4,41 @@
 		<title>Movie Night Chooser</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+		<style> body {padding-top: 70px;} </style>
 	</head>
 	<body>
 		<div class="container">
+			<h1>Movie Night Chooser</h1>
+			<div class="row">
+				<div class="col-md-12 well" id="entry">
+					<form>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Enter an idea..." name="movie">
+						</div>
+						<button class="btn btn-primary btn-lg" id="add">Add</button>
+					</form>
+				</div>
+			</div>
 
+			<div class="row">
+				<div class="col-md-12 well" id="selection"></div>
+			</div>
 		</div>
 		<script data-main="index" src="http://requirejs.org/docs/release/2.2.0/minified/require.js"></script>
+
+		<script type="text/template" id="list">
+			<% if (movies.length) { %>
+				<h3><%= test %></h3>
+				<ul>
+					<% _.each(movies, function (movie) { %>
+						<li><%= movie.name %></li>
+					<% }); %>
+				</ul>
+				<button class="btn btn-default btn-lg" id="choose">Choose</button>
+			<% } else { %>
+				<h3>No movies yet...</h3>
+			<% } %>
+		</script>
+
 	</body>
 </html>
