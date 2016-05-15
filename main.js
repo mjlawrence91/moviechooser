@@ -1,16 +1,30 @@
 define(['backbone', 'underscore', 'jquery', 'localstorage'], function (Backbone, _, $)
 {
 	const Collection = Backbone.Collection.extend({
-		model: new Backbone.Model()
+		model: Backbone.Model
 	,	localStorage: new Backbone.LocalStorage('Movies')
+	,	initialize: function ()
+		{
+			const movies = this.fetchMovies();
+
+			if (movies.length)
+			{
+				this.add(movies);
+			}
+		}
+
+	,	fetchMovies: function ()
+		{
+			const moviesString = localStorage.getItem('movies');
+			return JSON.parse(moviesString);
+		}
 	});
 
 	const Router = Backbone.Router.extend({
 		initialize: function ()
 		{
 			const collection = new App.Collection();
-
-			const selection = new App.views.SelectionView(collection);
+			const selection = new App.views.SelectionView({collection});
 			selection.render();
 		}
 	});
@@ -18,7 +32,8 @@ define(['backbone', 'underscore', 'jquery', 'localstorage'], function (Backbone,
 	const SelectionView = Backbone.View.extend({
 		initialize: function ()
 		{
-			$('form').on('submit', this.addMovie);
+			$('form').on('submit', this.addMovie.bind(this));
+			this.collection.on('add', this.render, this);
 		}
 
 	,	el: '#selection'
@@ -32,34 +47,54 @@ define(['backbone', 'underscore', 'jquery', 'localstorage'], function (Backbone,
 	,	addMovie: function (e)
 		{
 			e.preventDefault();
-			console.log('Add button clicked', e)
 
+			const formData = $(e.target).serializeArray();
+			const movieName = formData[0].value;
+
+			if (movieName)
+			{
+				const newModel = new Backbone.Model({name: movieName});
+				this.collection.add(newModel);
+				this.savetoStore();
+
+				$('input[name=movie]').val('');
+			}
+		}
+
+	,	savetoStore: function (collection)
+		{
+			const moviesString = JSON.stringify(this.collection.toJSON());
+			localStorage.setItem('movies', moviesString);
 		}
 
 	,	chooseRandom: function (e)
 		{
 			e.preventDefault();
-			// console.log('Choose button clicked')
 
 			const random = this.collection.sample();
-			console.log(random);
-
+			const movieName = random.get('name');
+			this.render(movieName);
 		}
 
-	,	render: function ()
+	,	render: function (selection)
 		{
-			this.$el.html(this.template({test: 'Hello World', movies: []}));
+			if (_.isObject(selection))
+			{
+				selection = null;
+			}
+
+			this.$el.html(this.template({
+				selection: selection || ''
+			,	movies: this.collection.toJSON()
+			}));
+
 			return this;
 		}
 	});
 
 	const App = {
 		Collection
-
-	,	views: {
-			SelectionView
-		}
-
+	,	views: {SelectionView}
 	,	Router
 	};
 

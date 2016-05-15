@@ -13,7 +13,7 @@
 				<div class="col-md-12 well" id="entry">
 					<form>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Enter an idea..." name="movie">
+							<input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
 						</div>
 						<button class="btn btn-primary btn-lg" id="add">Add</button>
 					</form>
@@ -28,7 +28,7 @@
 
 		<script type="text/template" id="list">
 			<% if (movies.length) { %>
-				<h3><%= test %></h3>
+				<h3><%= selection %></h3>
 				<ul>
 					<% _.each(movies, function (movie) { %>
 						<li><%= movie.name %></li>

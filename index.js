@@ -14,10 +14,7 @@ require.config({
 			deps: ['jquery', 'underscore']
 		,	exports: 'Backbone'
 		}
-	,	'localstorage': {
-			deps: ['backbone']
-		,	exports: 'Store'
-		}
+	,	'localStorage': ['backbone']
 	}
 });
 
