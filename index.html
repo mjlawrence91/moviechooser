@@ -7,6 +7,7 @@
 		<style>
 			body {padding-top: 70px;}
 			a.remove {color: #666;}
+			.movie {font-size: 18px;}
 		</style>
 	</head>
 	<body>
@@ -36,7 +37,7 @@
 				<h4><%= selection %></h4>
 				<ul>
 					<% _.each(movies, function (movie) { %>
-						<li>
+						<li class="movie">
 							<span><%= movie.name %></span>
 							<a class="remove" href="#">
 								<span class="fa fa-times"></span>
