@@ -11,4 +11,4 @@ mjl-moviechooser
 
 ## Contact
 #### MJ Lawrence
-* Twitter: [@mjlawrence91](https://twitter.com/mjlawrence91 "mjlawrence91 on twitter")
+* Twitter: [@mjlawrence](https://twitter.com/mjlawrence "mjlawrence on twitter")
