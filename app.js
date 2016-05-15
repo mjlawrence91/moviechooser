@@ -14,7 +14,7 @@ const App = (function ()
 	function fetchMovies()
 	{
 		const moviesString = localStorage.getItem('movies');
-		return JSON.parse(moviesString);
+		return JSON.parse(moviesString) || [];
 	}
 
 	function savetoStore(newMovie)
