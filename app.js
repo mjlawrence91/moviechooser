@@ -33,16 +33,17 @@ const App = (function ()
 
 	function render(movies, selection)
 	{
-		if (movies.length)
-		{
-			$('#choose').click(chooseRandom);
-		}
-
 		selection = selection || 'Click Choose to select random idea...';
 
 		const renderSelectView = _.template(tplHtml);
 		const html = renderSelectView({selection, movies});
 		selectContainer.html(html);
+
+		if (movies.length)
+		{
+			$('#choose').click(chooseRandom);
+			$('a.remove').click(removeMovie);
+		}
 	}
 
 	function addMovie(e)
@@ -74,11 +75,30 @@ const App = (function ()
 		render(movies, name);
 	}
 
+	function removeMovie(e)
+	{
+		if (e) e.preventDefault();
+
+		const movieToDelete = $(e.target).parent().prev().html();
+		removeFromStore({name: movieToDelete});
+		render(fetchMovies());
+	}
+
+	function removeFromStore(movieToDelete)
+	{
+		const movies = fetchMovies();
+		const moviesWithoutRemoved = _(movies).reject(movie => movie.name === movieToDelete.name);
+
+		const moviesString = JSON.stringify(moviesWithoutRemoved);
+		localStorage.setItem('movies', moviesString);
+	}
+
 	return {
 		init
 	,	fetchMovies
 	,	render
 	,	savetoStore
+	,	removeFromStore
 	,	chooseRandom
 	};
 })();

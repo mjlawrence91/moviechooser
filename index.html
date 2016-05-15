@@ -3,8 +3,11 @@
 	<head>
 		<title>Movie Night Chooser</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
-		<style> body {padding-top: 70px;} </style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+		<style>
+			body {padding-top: 70px;}
+			a.remove {color: #666;}
+		</style>
 	</head>
 	<body>
 		<div class="container">
@@ -33,7 +36,12 @@
 				<h4><%= selection %></h4>
 				<ul>
 					<% _.each(movies, function (movie) { %>
-						<li><%= movie.name %></li>
+						<li>
+							<span><%= movie.name %></span>
+							<a class="remove" href="#">
+								<span class="fa fa-times"></span>
+							</a>
+						</li>
 					<% }); %>
 				</ul>
 				<button class="btn btn-default btn-lg" id="choose">Choose</button>
