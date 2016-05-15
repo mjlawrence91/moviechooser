@@ -24,11 +24,13 @@
 				<div class="col-md-12 well" id="selection"></div>
 			</div>
 		</div>
-		<script data-main="index" src="http://requirejs.org/docs/release/2.2.0/minified/require.js"></script>
+
+		<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+		<script src="http://underscorejs.org/underscore-min.js"></script>
 
 		<script type="text/template" id="list">
 			<% if (movies.length) { %>
-				<h3><%= selection %></h3>
+				<h4><%= selection %></h4>
 				<ul>
 					<% _.each(movies, function (movie) { %>
 						<li><%= movie.name %></li>
@@ -36,9 +38,10 @@
 				</ul>
 				<button class="btn btn-default btn-lg" id="choose">Choose</button>
 			<% } else { %>
-				<h3>No movies yet...</h3>
+				<h4>No movies yet...</h4>
 			<% } %>
 		</script>
 
+		<script src="app.js"></script>
 	</body>
 </html>
