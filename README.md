@@ -1,6 +1,6 @@
-mjl-moviechooser
-================
-**mjl-moviechooser** is an app for choosing a random movie night idea from a predefined list.
+moviechooser
+============
+**moviechooser** is an app for choosing a random movie night idea from a predefined list.
 
 ## Technology
 * [Bootstrap](http://getbootstrap.com) [Paper](https://bootswatch.com/paper/) template from [Bootswatch](https://bootswatch.com/)
