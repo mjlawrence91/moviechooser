@@ -1,14 +1,62 @@
 const App = (function ()
 {
 	const selectContainer = $('#selection');
-	const tplHtml = $('#list').html();
+	const listHtml = $('#list').html();
+	const titleHtml = $('#title').html();
 
 	function init()
 	{
+		//Add movie handler
 		$('form').on('submit', addMovie);
 
+		//Load movies and title, then render
 		const movies = fetchMovies();
 		render(movies);
+
+		//Load stored title if one present
+		const currentTitle = localStorage.getItem('title') || 'Movie Chooser';
+		$('.title').text(currentTitle);
+
+		//Make the title editable when double-clicked
+		$('.title').on('dblclick', function (e)
+		{
+			$(e.target).attr('contenteditable', true).focus();
+		});
+
+		//Save the new title when the title loses focus
+		$('.title').blur(function (e)
+		{
+			const newTitle = $(e.target).text();
+			const storedTitle = localStorage.getItem('title') || 'Movie Chooser';
+
+			if (newTitle)
+			{
+				if (newTitle !== storedTitle)
+				{
+					localStorage.setItem('title', newTitle);
+				}
+			}
+			else
+			{
+				$(e.target).text(storedTitle);
+			}
+
+			$(e.target).attr('contenteditable', false);
+		});
+
+		//If title is editable and Enter is pressed, save title
+		$(document).keypress(function (e)
+		{
+			if (e.keyCode === 13) //Enter
+			{
+				e.preventDefault();
+
+				if ($('.title').is(':focus'))
+				{
+					$('.title').blur();
+				}
+			}
+		});
 	}
 
 	function fetchMovies()
@@ -35,9 +83,14 @@ const App = (function ()
 	{
 		selection = selection || 'Click Choose to select random idea...';
 
-		const renderSelectView = _.template(tplHtml);
+		const renderSelectView = _.template(listHtml);
 		const html = renderSelectView({selection, movies});
 		selectContainer.html(html);
+
+		const title = localStorage.getItem('title') || 'Movie Chooser';
+		const renderTitleView = _.template(titleHtml);
+		const newTitle = renderTitleView({title});
+		$(newTitle).prependTo('.container:first-child');
 
 		if (movies.length)
 		{
