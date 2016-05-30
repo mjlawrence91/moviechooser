@@ -44,6 +44,12 @@ const App = (function ()
 			$(e.target).attr('contenteditable', false);
 		});
 
+		$('.title').on('doubletap', function (e)
+		{
+			$(e.target).trigger('dblclick');
+			$(e.target).selectText();
+		});
+
 		//If title is editable and Enter is pressed, save title
 		$(document).keypress(function (e)
 		{
@@ -157,3 +163,61 @@ const App = (function ()
 })();
 
 $(document).ready(App.init);
+
+//From Tom Oakley on StackOverflow: http://stackoverflow.com/a/12244703
+$.fn.selectText = function ()
+{
+    var doc = document;
+    var element = this[0];
+
+	if (doc.body.createTextRange)
+	{
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    }
+	else if (window.getSelection)
+	{
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+};
+
+/*
+ * jQuery Double Tap
+ * Developer: Sergey Margaritov (sergey@margaritov.net)
+ * Date: 22.10.2013
+ * Based on jquery documentation http://learn.jquery.com/events/event-extensions/
+ */
+(function($){
+
+  $.event.special.doubletap = {
+    bindType: 'touchend',
+    delegateType: 'touchend',
+
+    handle: function(event) {
+      var handleObj   = event.handleObj,
+          targetData  = jQuery.data(event.target),
+          now         = new Date().getTime(),
+          delta       = targetData.lastTouch ? now - targetData.lastTouch : 0,
+          delay       = delay == null ? 300 : delay;
+
+      if (delta < delay && delta > 30) {
+        targetData.lastTouch = null;
+        event.type = handleObj.origType;
+        ['clientX', 'clientY', 'pageX', 'pageY'].forEach(function(property) {
+          event[property] = event.originalEvent.changedTouches[0][property];
+        })
+
+        // let jQuery handle the triggering of "doubletap" event handlers
+        handleObj.handler.apply(this, arguments);
+      } else {
+        targetData.lastTouch = now;
+      }
+    }
+  };
+
+})(jQuery);
