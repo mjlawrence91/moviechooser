@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "deploy": "surge",
+    "deploy": "surge -p ./",
     "start": "npm run babel && python -m SimpleHTTPServer",
     "babel": "babel app.js -d dist",
     "watch": "babel app.js -w -d dist --source-maps inline"
