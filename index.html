@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Movie Chooser</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 		<link rel="stylesheet" href="style.css">
@@ -9,18 +10,22 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 col-xs-12 well" id="entry">
-					<form>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
-						</div>
-						<button class="btn btn-primary btn-lg" id="add">Add</button>
-					</form>
+				<div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+					<div class="well">
+						<form>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
+							</div>
+							<button class="btn btn-primary btn-lg" id="add">Add</button>
+						</form>
+					</div>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-12 col-xs-12 well" id="selection"></div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="well" id="selection"></div>
+				</div>
 			</div>
 		</div>
 
@@ -50,6 +55,6 @@
 			<div class="h2 title"><%- title %></div>
 		</script>
 
-		<script src="app.js"></script>
+		<script src="dist/app.js"></script>
 	</body>
 </html>
