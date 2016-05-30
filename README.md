@@ -4,9 +4,9 @@ moviechooser
 
 ## Technology
 * [Bootstrap](http://getbootstrap.com) [Paper](https://bootswatch.com/paper/) template from [Bootswatch](https://bootswatch.com/)
-* [jQuery](https://jquery.com), [Underscore](http://underscorejs.org)
 * [Font Awesome](http://fortawesome.io)
-* [robots.txt](https://github.com/username/username.github.io/blob/master/robots.txt)
+* [Babel](https://babeljs.io/), [jQuery](https://jquery.com), [Underscore](http://underscorejs.org)
+* [Surge](http://surge.sh/)
 
 ## Contact
 #### MJ Lawrence
