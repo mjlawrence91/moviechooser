@@ -14,8 +14,7 @@ const App = (function ()
 		render(movies);
 
 		//Load stored title if one present
-		const currentTitle = localStorage.getItem('title') || 'Movie Chooser';
-		$('.title').text(currentTitle);
+		renderTitle();
 
 		//Make the title editable when double-clicked
 		$('.title').on('dblclick', function (e)
@@ -93,16 +92,19 @@ const App = (function ()
 		const html = renderSelectView({selection, movies});
 		selectContainer.html(html);
 
-		const title = localStorage.getItem('title') || 'Movie Chooser';
-		const renderTitleView = _.template(titleHtml);
-		const newTitle = renderTitleView({title});
-		$(newTitle).prependTo('.container:first-child');
-
 		if (movies.length)
 		{
 			$('#choose').click(chooseRandom);
 			$('a.remove').click(removeMovie);
 		}
+	}
+
+	function renderTitle()
+	{
+		const title = localStorage.getItem('title') || 'Movie Chooser';
+		const renderTitleView = _.template(titleHtml);
+		const newTitle = renderTitleView({title});
+		$(newTitle).prependTo('.container:first-child');
 	}
 
 	function addMovie(e)
