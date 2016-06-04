@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "deploy": "surge -p ./",
-    "start": "npm run babel && python -m SimpleHTTPServer",
+    "deploy": "npm run prep && surge -p ./dist",
+    "start": "npm run prep && python -m SimpleHTTPServer",
+    "prep": "npm run babel && cp index.html dist/ && cp style.css dist/",
     "babel": "babel app.js -d dist",
     "watch": "babel app.js -w -d dist --source-maps inline"
   },
