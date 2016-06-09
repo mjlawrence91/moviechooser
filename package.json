@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "deploy": "npm run prep && surge -p ./dist",
-    "start": "npm run prep && python -m SimpleHTTPServer",
-    "prep": "npm run babel && cp index.html dist/ && cp style.css dist/",
-    "babel": "babel app.js -d dist",
+    "surge": "npm run deploy && surge -p ./dist",
+    "start": "npm run deploy && python -m SimpleHTTPServer",
+    "deploy": "npm run babel && sh deploy.sh",
+    "babel": "babel app.js -d dist --minified",
     "watch": "babel app.js -w -d dist --source-maps inline"
   },
   "devDependencies": {
