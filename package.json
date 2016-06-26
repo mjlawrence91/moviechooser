@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "surge": "npm run deploy && surge -p ./dist",
-    "start": "npm run deploy && python -m SimpleHTTPServer",
-    "deploy": "npm run babel && sh deploy.sh",
     "babel": "babel app.js -d dist --minified",
-    "watch": "babel app.js -w -d dist --source-maps inline"
+    "watch": "babel app.js -w -d dist --source-maps inline",
+    "deploy": "npm run babel && sh deploy.sh",
+    "start": "npm run deploy && python -m SimpleHTTPServer",
+    "surge": "npm run deploy && surge -p ./dist"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
