@@ -1,0 +1,11 @@
+{
+  "globals": {
+    "localStorage": true
+  },
+  "parser": "babel-eslint",
+  "extends": "standard",
+  "plugins": [],
+  "rules": {
+    "arrow-parens": 0
+  }
+}
