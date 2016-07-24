@@ -71,9 +71,14 @@ const App = (function ($, _) {
 
   function render (movies, selection) {
     selection = selection || 'Click Choose to select random idea...'
+    const colours = {
+      'Alex': 'info',
+      'Matt': 'primary',
+      'Rob': 'danger'
+    }
 
     const renderSelectView = _.template(listHtml)
-    const html = renderSelectView({selection, movies})
+    const html = renderSelectView({selection, movies, colours})
     selectContainer.html(html)
 
     if (movies.length) {
@@ -94,9 +99,10 @@ const App = (function ($, _) {
 
     const formData = $(e.target).serializeArray()
     const movieName = formData[0].value
+    const who = formData[1].value
 
-    if (movieName) {
-      const newModel = {name: movieName}
+    if (movieName && who) {
+      const newModel = {name: movieName, who}
       savetoStore(newModel)
 
       $('input[name=movie]').val('')
