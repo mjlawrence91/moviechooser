@@ -15,6 +15,19 @@ a.remove {
 	padding-bottom: 5px;
 }
 
+[for=who] {
+  margin-top: 10px;
+  margin-bottom: auto;
+}
+
+#add {
+  margin-top: 18px;
+}
+
+.movie-name {
+  margin-left: 5px;
+}
+
 @media only screen and (max-width: 768px) {
 	body {
 		padding-top: 30px;
