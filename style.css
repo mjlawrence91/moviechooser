@@ -15,11 +15,6 @@ a.remove {
 	padding-bottom: 5px;
 }
 
-[for=who] {
-  margin-top: 10px;
-  margin-bottom: auto;
-}
-
 #add {
   margin-top: 18px;
 }
@@ -36,4 +31,9 @@ a.remove {
 	.title {
 		font-size: 30px;
 	}
+
+  [for=who] {
+    margin-top: 10px;
+    margin-bottom: auto;
+  }
 }
