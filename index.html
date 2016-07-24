@@ -10,13 +10,33 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12 col-xs-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-lg-12">
 					<div class="well">
 						<form>
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
-							</div>
-							<button class="btn btn-primary btn-lg" id="add">Add</button>
+              <fieldset>
+                <div class="form-group">
+                  <label for="movie" class="col-xs-12 col-lg-2 control-label">Movie Name</label>
+                  <div class="col-xs-12 col-lg-10">
+                    <input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="who" class="col-xs-12 col-lg-2 control-label">Who?</label>
+                  <div class="col-xs-12 col-lg-10">
+                    <select class="form-control" name="who">
+                      <option value=""></option>
+                      <option value="Alex">Alex</option>
+                      <option value="Matt">Matt</option>
+                      <option value="Rob">Rob</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-12 col-xs-offset-5 col-lg-10 col-lg-offset-5">
+                    <button class="btn btn-primary btn-lg" id="add">Add</button>
+                  </div>
+                </div>
+              </fieldset>
 						</form>
 					</div>
 				</div>
@@ -33,22 +53,28 @@
 		<script src="http://underscorejs.org/underscore-min.js"></script>
 
 		<script type="text/template" id="list">
+      <fieldset>
 			<% if (movies.length) { %>
 				<h4><%- selection %></h4>
 				<ul>
 					<% _.each(movies, function (movie) { %>
 						<li class="movie">
-							<span><%- movie.name %></span>
+              <span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
+							<span class="movie-name"><%- movie.name %></span>
 							<a class="remove" href="#">
 								<span class="fa fa-times"></span>
 							</a>
 						</li>
 					<% }); %>
 				</ul>
-				<button class="btn btn-default btn-lg" id="choose">Choose</button>
+        <div class="col-xs-12 col-xs-offset-5 col-lg-10 col-lg-offset-5">
+          <!-- <button class="btn btn-primary btn-lg" id="add">Add</button> -->
+          <button class="btn btn-default btn-lg" id="choose">Choose</button>
+        </div>
 			<% } else { %>
 				<h4>No movies yet...</h4>
 			<% } %>
+      </fieldset>
 		</script>
 
 		<script type="text/template" id="title">
