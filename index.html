@@ -3,7 +3,6 @@
 	<head>
 		<title>Movie Chooser</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
 		<link rel="stylesheet" href="style.css">
 	</head>
@@ -53,13 +52,13 @@
 			<fieldset>
 				<% if (movies.length) { %>
 					<h4><%- selected %></h4>
+					<p>Click a movie's name to remove it from the list.</p>
 					<ul>
 						<% movies.forEach(function (movie) { %>
 							<li class="movie">
 								<span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
-								<span class="movie-name"><%- movie.name %></span>
 								<a class="remove" data-remove="<%- movie.name %>" href="#">
-									<span class="fa fa-times"></span>
+									<span class="movie-name"><%- movie.name %></span>
 								</a>
 							</li>
 						<% }); %>
@@ -77,9 +76,9 @@
 			<div class="h2 title"><%- title %></div>
 		</script>
 
-    <script type="text/template" id="whos">
-      <option value="<%- who %>"><%- who %></option>
-    </script>
+		<script type="text/template" id="whos">
+			<option value="<%- who %>"><%- who %></option>
+		</script>
 
 		<script src="app.js"></script>
 	</body>
