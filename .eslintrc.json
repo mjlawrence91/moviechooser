@@ -1,11 +1,15 @@
 {
   "globals": {
     "localStorage": true
+  , "FormData": true
+  , "MouseEvent": true
   },
   "parser": "babel-eslint",
   "extends": "standard",
-  "plugins": [],
+  "plugins": ["flow-vars"],
   "rules": {
-    "arrow-parens": 0
+    "arrow-parens": 0,
+    "flow-vars/define-flow-type": 1,
+    "flow-vars/use-flow-type": 1
   }
 }
