@@ -10,7 +10,7 @@ moviechooser
 
 ### Credits
 * jQuery "doubletap" event plugin comes from [this Gist](https://gist.github.com/attenzione/7098476) from GitHub user [attenzione](https://github.com/attenzione).
-* selectText function is adapted from jQuery plugin given in [this StackOverflow answer](http://stackoverflow.com/a/12244703) by user [Tom Oakley](http://stackoverflow.com/users/1125251/tom-oakley).
+* `selectText` function is adapted from jQuery plugin given in [this StackOverflow answer](http://stackoverflow.com/a/12244703) by user [Tom Oakley](http://stackoverflow.com/users/1125251/tom-oakley).
 
 ## Contact
 #### MJ Lawrence
