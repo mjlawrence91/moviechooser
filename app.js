@@ -87,6 +87,9 @@ const App = (function ($, _) {
 
       render(fetchMovies())
       _clearFormValues()
+
+      // Re-focus name field for new entry
+      document.querySelector('input[name=movie]').focus()
     }
   }
 
