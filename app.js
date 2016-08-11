@@ -17,7 +17,7 @@ class App {
     this._titleHtml = document.querySelector('#title').innerHTML
     this._whosHtml = document.querySelector('#whos').innerHTML
 
-    // Needed for doubletap handler
+    // Needed for mobile doubletap handler
     this._tappedTwice = false
 
     // Ensures all methods are accessible throughout the class
