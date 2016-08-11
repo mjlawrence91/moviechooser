@@ -17,6 +17,10 @@ class App {
     this._titleHtml = document.querySelector('#title').innerHTML
     this._whosHtml = document.querySelector('#whos').innerHTML
 
+    // Needed for doubletap handler
+    this._tappedTwice = false
+
+    // Ensures all methods are accessible throughout the class
     this._createBindings()
   }
 
@@ -134,7 +138,6 @@ class App {
     this.render = this.render.bind(this)
     this.renderTitle = this.renderTitle.bind(this)
     this.renderWhos = this.renderWhos.bind(this)
-    this.fetchMovies = this.fetchMovies.bind(this)
     this.savetoStore = this.savetoStore.bind(this)
     this.addMovie = this.addMovie.bind(this)
     this.chooseRandom = this.chooseRandom.bind(this)
@@ -142,9 +145,7 @@ class App {
     this.removeFromStore = this.removeFromStore.bind(this)
     this._firstRender = this._firstRender.bind(this)
     this._addHandlers = this._addHandlers.bind(this)
-    this._saveTitleOnEnter = this._saveTitleOnEnter.bind(this)
     this._saveTitleOnBlur = this._saveTitleOnBlur.bind(this)
-    this._clearFormValues = this._clearFormValues.bind(this)
   }
 
   _firstRender () {
@@ -181,10 +182,17 @@ class App {
     })
 
     // Add doubletap handler for mobile
-    window.$(title).on('doubletap', evt => {
-      evt.preventDefault()
-      evt.target.dispatchEvent(new MouseEvent('dblclick'))
-    })
+    document.addEventListener('touchstart', this._doubleTapHandler)
+  }
+
+  _doubleTapHandler (evt) {
+    if (!this._tappedTwice) {
+      this._tappedTwice = true
+      setTimeout(_ => { this._tappedTwice = false }, 300)
+      return false
+    }
+    evt.preventDefault()
+    evt.target.dispatchEvent(new MouseEvent('dblclick'))
   }
 
   _saveTitleOnEnter (evt) {
@@ -222,47 +230,22 @@ class App {
     document.querySelector('input[name=movie]').value = ''
     document.querySelector('select[name=who]').value = ''
   }
-}
 
-/*eslint-disable */
-
-/*
- * jQuery Double Tap
- * Developer: Sergey Margaritov (sergey@margaritov.net)
- * Date: 22.10.2013
- * Based on jquery documentation http://learn.jquery.com/events/event-extensions/
- */
-;(function($){
-
-  $.event.special.doubletap = {
-    bindType: 'touchend',
-    delegateType: 'touchend',
-
-    handle: function(event) {
-      var handleObj   = event.handleObj,
-          targetData  = jQuery.data(event.target),
-          now         = new Date().getTime(),
-          delta       = targetData.lastTouch ? now - targetData.lastTouch : 0,
-          delay       = delay == null ? 300 : delay;
-
-      if (delta < delay && delta > 30) {
-        targetData.lastTouch = null;
-        event.type = handleObj.origType;
-        ['clientX', 'clientY', 'pageX', 'pageY'].forEach(function(property) {
-          event[property] = event.originalEvent.changedTouches[0][property];
-        })
-
-        // let jQuery handle the triggering of "doubletap" event handlers
-        handleObj.handler.apply(this, arguments);
-      } else {
-        targetData.lastTouch = now;
-      }
+  _selectText (element) {
+    let range = null
+    if (document.body.createTextRange) {
+      range = document.body.createTextRange()
+      range.moveToElementText(element)
+      range.select()
+    } else if (window.getSelection) {
+      const selection = window.getSelection()
+      range = document.createRange()
+      range.selectNodeContents(element)
+      selection.removeAllRanges()
+      selection.addRange(range)
     }
-  };
-
-})($);
-
-/*eslint-enable */
+  }
+}
 
 const app = new App()
 window.addEventListener('load', app.init)
