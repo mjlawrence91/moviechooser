@@ -5,7 +5,6 @@ moviechooser
 ## Technology
 * [Bootstrap](http://getbootstrap.com) [Paper](https://bootswatch.com/paper/) template from [Bootswatch](https://bootswatch.com/)
 * [Babel](https://babeljs.io/), [Underscore](http://underscorejs.org)
-* [Surge](http://surge.sh/)
 
 ### Credits
 * Double tap event handler function comes from [this StackOverflow answer](http://stackoverflow.com/a/32761323) user [Anulal S](http://stackoverflow.com/users/3951761/anulal-s).

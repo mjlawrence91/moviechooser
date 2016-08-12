@@ -3,8 +3,9 @@
     "babel": "babel App.js -d dist --minified",
     "watch": "babel App.js -w -d dist --source-maps inline",
     "deploy": "npm run babel && sh deploy.sh",
-    "start": "npm run deploy && python -m SimpleHTTPServer",
-    "surge": "npm run deploy && surge -p ./dist"
+    "py": "npm run deploy && python -m SimpleHTTPServer",
+    "dev": "npm run deploy && nodemon server",
+    "start": "npm run deploy && node server"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
@@ -13,6 +14,11 @@
     "eslint": "2.9.0",
     "eslint-config-standard": "^5.3.1",
     "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-standard": "^1.3.2"
+    "eslint-plugin-standard": "^1.3.2",
+    "nodemon": "^1.10.0"
+  },
+  "dependencies": {
+    "express": "4.14.0",
+    "serve-static": "1.11.1"
   }
 }
