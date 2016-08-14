@@ -16,6 +16,7 @@ class App {
     this._listHtml = document.querySelector('#list').innerHTML
     this._titleHtml = document.querySelector('#title').innerHTML
     this._whosHtml = document.querySelector('#whos').innerHTML
+    this._whosFiltersHtml = document.querySelector('#whosfilters').innerHTML
 
     // Needed for mobile doubletap handler
     this._tappedTwice = false
@@ -31,7 +32,7 @@ class App {
 
   render (movies, selection) {
     const selected = selection || 'Click Choose to select random idea...'
-    const renderSelectView = window._.template(this._listHtml)
+    const renderSelectView = _.template(this._listHtml)
     const html = renderSelectView({selected, movies, colours: App.WHOS})
     this._selectContainer.innerHTML = html
 
@@ -46,7 +47,7 @@ class App {
 
   renderTitle () {
     const title = localStorage.getItem('title') || 'Movie Chooser'
-    const renderTitleView = window._.template(this._titleHtml)
+    const renderTitleView = _.template(this._titleHtml)
     const newTitle = renderTitleView({title})
 
     const titleElement = document.createElement('div')
@@ -57,16 +58,21 @@ class App {
   }
 
   renderWhos () {
-    const renderWhosView = window._.template(this._whosHtml)
+    const renderWhosView = _.template(this._whosHtml)
     const whosSelect = document.querySelector('select')
+
     let options = whosSelect.innerHTML
+    Object.keys(App.WHOS).forEach(who => { options += renderWhosView({who}) })
+    whosSelect.innerHTML = options
+  }
+
+  renderWhosFilters () {
+    const renderWhosFiltersView = _.template(this._whosFiltersHtml)
+    const filtersContainer = document.querySelector('.filters')
 
     Object.keys(App.WHOS).forEach(who => {
-      let whoElement = renderWhosView({who})
-      options += whoElement
+      filtersContainer.innerHTML += renderWhosFiltersView({who, colours: App.WHOS})
     })
-
-    whosSelect.innerHTML = options
   }
 
   fetchMovies () {
@@ -109,8 +115,11 @@ class App {
     if (evt) evt.preventDefault()
 
     const movies = this.fetchMovies()
-    const rand = Math.floor(Math.random() * movies.length)
-    const {name} = movies[rand]
+    const filterEl = document.querySelector('.js-filter.active')
+    const filteredMovies = (filterEl ? movies.filter(movie => movie.who === filterEl.innerHTML) : movies)
+
+    const rand = Math.floor(Math.random() * filteredMovies.length)
+    const {name} = filteredMovies[rand] || {name: 'No movies.'}
 
     this.render(movies, name)
   }
@@ -138,6 +147,7 @@ class App {
     this.render = this.render.bind(this)
     this.renderTitle = this.renderTitle.bind(this)
     this.renderWhos = this.renderWhos.bind(this)
+    this.renderWhosFilters = this.renderWhosFilters.bind(this)
     this.savetoStore = this.savetoStore.bind(this)
     this.addMovie = this.addMovie.bind(this)
     this.chooseRandom = this.chooseRandom.bind(this)
@@ -146,6 +156,7 @@ class App {
     this._firstRender = this._firstRender.bind(this)
     this._addHandlers = this._addHandlers.bind(this)
     this._saveTitleOnBlur = this._saveTitleOnBlur.bind(this)
+    this._filterRandom = this._filterRandom.bind(this)
   }
 
   _firstRender () {
@@ -156,13 +167,15 @@ class App {
     // Load stored title if one present
     this.renderTitle()
 
-    // Load options for who suggested a movie
+    // Load options and filters for who suggested a movie
     this.renderWhos()
+    this.renderWhosFilters()
   }
 
   _addHandlers () {
     const form = document.querySelector('form')
     const title = document.querySelector('.title')
+    const filters = document.querySelectorAll('.js-filter')
 
     // Add handler to submit form
     form.addEventListener('submit', this.addMovie)
@@ -183,6 +196,9 @@ class App {
 
     // Add doubletap handler for mobile
     document.addEventListener('touchstart', this._doubleTapHandler)
+
+    // Click handler for filters
+    Array.from(filters).forEach(filter => filter.addEventListener('click', this._filterRandom))
   }
 
   _doubleTapHandler (evt) {
@@ -244,6 +260,16 @@ class App {
       selection.removeAllRanges()
       selection.addRange(range)
     }
+  }
+
+  _filterRandom (evt) {
+    if (evt.target.classList.contains('active')) {
+      return evt.target.classList.remove('active')
+    }
+
+    const unselected = Array.from(document.querySelectorAll('.js-filter.active'))
+    unselected.forEach(uns => uns.classList.remove('active'))
+    evt.target.classList.add('active')
   }
 }
 

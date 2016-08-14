@@ -4,15 +4,11 @@ html, body {
 }
 
 body {
-	padding-top: 70px;
+  padding-top: 70px;
 }
 
-a.remove {
-	color: #666;
-}
-
-.movie {
-	font-size: 18px;
+button:focus:not(#add) {
+  outline: 0 !important;
 }
 
 .title {
@@ -20,12 +16,29 @@ a.remove {
 	padding-bottom: 5px;
 }
 
-#add {
+#add, #choose {
   margin-top: 18px;
+}
+
+.filter-label {
+  margin-bottom: 0;
+  margin-top: 9px;
+}
+
+.movie {
+	font-size: 18px;
 }
 
 .movie-name {
   margin-left: 5px;
+}
+
+.label {
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+a.remove {
+	color: #666;
 }
 
 @media only screen and (max-width: 768px) {
