@@ -2,7 +2,8 @@
   "globals": {
     "localStorage": true,
     "FormData": true,
-    "MouseEvent": true
+    "MouseEvent": true,
+    "_": true
   },
   "parser": "babel-eslint",
   "extends": "standard",
