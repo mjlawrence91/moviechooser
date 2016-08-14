@@ -10,5 +10,5 @@ Thumbs.db
 
 archive
 dist
-start.sh
 node_modules
+ROADMAP.md
