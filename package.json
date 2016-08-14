@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "babel": "babel App.js -d dist --minified",
-    "watch": "babel App.js -w -d dist --source-maps inline",
+    "start": "npm run deploy && node server",
     "deploy": "npm run babel && sh deploy.sh",
-    "py": "npm run deploy && python -m SimpleHTTPServer",
-    "dev": "npm run deploy && nodemon server",
-    "start": "npm run deploy && node server"
+    "babel": "babel App.js -d dist --minified",
+    "dev": "nodemon --watch server.js --exec 'NODE_ENV=dev node server'",
+    "watch": "babel App.js -w -d dist --source-maps inline"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
