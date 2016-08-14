@@ -1,28 +1,45 @@
 html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-body {
-  padding-top: 70px;
+	max-width: 100%;
+	overflow-x: hidden;
 }
 
 button:focus:not(#add) {
-  outline: 0 !important;
+	outline: 0 !important;
 }
 
-.title {
-	padding-top: 5px;
-	padding-bottom: 5px;
+.header {
+	width: 100%;
+	height: 56px;
+	color: #FFF;
+	/*background: #607D8B;*/
+	background: #455a64;
+	font-size: 20px;
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),
+			0 2px 9px 1px rgba(0,0,0,.12),
+			0 4px 2px -2px rgba(0,0,0,.2);
+	padding: 16px 16px 0;
+	position: fixed;
+	z-index: 1;
+}
+
+.header__title {
+	color: #EEE;
+	font-weight: 400;
+	font-size: 20px;
+	margin: 0;
+}
+
+.container {
+	margin-top: 100px;
 }
 
 #add, #choose {
-  margin-top: 18px;
+	margin-top: 18px;
 }
 
 .filter-label {
-  margin-bottom: 0;
-  margin-top: 9px;
+	margin-bottom: 0;
+	margin-top: 9px;
 }
 
 .movie {
@@ -30,11 +47,11 @@ button:focus:not(#add) {
 }
 
 .movie-name {
-  margin-left: 5px;
+	margin-left: 5px;
 }
 
 .label {
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }
 
 a.remove {
@@ -42,16 +59,16 @@ a.remove {
 }
 
 @media only screen and (max-width: 768px) {
-	body {
-		padding-top: 30px;
+	.container {
+		margin-top: 72px;
 	}
 
 	.title {
 		font-size: 30px;
 	}
 
-  [for=who] {
-    margin-top: 10px;
-    margin-bottom: auto;
-  }
+	[for=who] {
+		margin-top: 10px;
+		margin-bottom: auto;
+	}
 }

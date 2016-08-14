@@ -14,7 +14,6 @@ class App {
   constructor () {
     this._selectContainer = document.querySelector('#selection')
     this._listHtml = document.querySelector('#list').innerHTML
-    this._titleHtml = document.querySelector('#title').innerHTML
     this._whosHtml = document.querySelector('#whos').innerHTML
     this._whosFiltersHtml = document.querySelector('#whosfilters').innerHTML
 
@@ -37,6 +36,7 @@ class App {
     this._selectContainer.innerHTML = html
 
     if (movies.length) {
+      // [TODO] Need to move this to make sure same event listener is added multiple times
       document.querySelector('#choose').addEventListener('click', this.chooseRandom)
 
       const removes = document.querySelectorAll('a.remove')
@@ -47,14 +47,12 @@ class App {
 
   renderTitle () {
     const title = localStorage.getItem('title') || 'Movie Chooser'
-    const renderTitleView = _.template(this._titleHtml)
-    const newTitle = renderTitleView({title})
 
-    const titleElement = document.createElement('div')
-    titleElement.innerHTML = newTitle
+    const titleElement = document.createElement('h1')
+    titleElement.classList.add('header__title')
+    titleElement.innerHTML = title
 
-    const container = document.querySelector('.container')
-    container.insertBefore(titleElement, container.firstChild)
+    document.querySelector('.header').appendChild(titleElement)
   }
 
   renderWhos () {
@@ -174,7 +172,7 @@ class App {
 
   _addHandlers () {
     const form = document.querySelector('form')
-    const title = document.querySelector('.title')
+    const title = document.querySelector('.header__title')
     const filters = document.querySelectorAll('.js-filter')
 
     // Add handler to submit form
@@ -239,7 +237,7 @@ class App {
 
     // Remove save title handlers
     document.removeEventListener('keypress', this._saveTitleOnEnter)
-    document.querySelector('.title').removeEventListener('blur', this._saveTitleOnBlur)
+    document.querySelector('.header__title').removeEventListener('blur', this._saveTitleOnBlur)
   }
 
   _clearFormValues () {
