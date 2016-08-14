@@ -36,9 +36,6 @@ class App {
     this._selectContainer.innerHTML = html
 
     if (movies.length) {
-      // [TODO] Need to move this to make sure same event listener is added multiple times
-      document.querySelector('#choose').addEventListener('click', this.chooseRandom)
-
       const removes = document.querySelectorAll('a.remove')
       const removesArray = Array.from(removes)
       removesArray.forEach(remove => remove.addEventListener('click', this.removeMovie))
@@ -174,6 +171,9 @@ class App {
     const form = document.querySelector('form')
     const title = document.querySelector('.header__title')
     const filters = document.querySelectorAll('.js-filter')
+
+    // Add handler for Choose button
+    document.querySelector('#choose').addEventListener('click', this.chooseRandom)
 
     // Add handler to submit form
     form.addEventListener('submit', this.addMovie)
