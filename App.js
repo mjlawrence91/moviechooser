@@ -90,9 +90,17 @@ class App {
   addMovie (evt) {
     if (evt) evt.preventDefault()
 
-    const formData = new FormData(evt.target)
-    const movieName = formData.get('movie')
-    const who = formData.get('who')
+    let movieName = ''
+    let who = ''
+
+    if (new FormData().get) {
+      const formData = new FormData(evt.target)
+      movieName = formData.get('movie')
+      who = formData.get('who')
+    } else { // Fix for iOS
+      movieName = document.querySelector('[name=movie]').value
+      who = document.querySelector('[name=who]').value
+    }
 
     if (movieName && who) {
       const newModel = {name: movieName, who}
