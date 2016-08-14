@@ -23,7 +23,7 @@ button:focus:not(#add) {
 }
 
 .header__title {
-	color: #EEE;
+	color: #FFF;
 	font-weight: 400;
 	font-size: 20px;
 	margin: 0;
@@ -52,10 +52,76 @@ button:focus:not(#add) {
 
 .label {
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+  font-weight: normal;
+  text-transform: uppercase;
 }
 
 a.remove {
 	color: #666;
+}
+
+.overlay {
+  position: absolute;
+  background-color: #DDD;
+  width: 96%;
+  height: 94%;
+  top: 0px;
+  left: 15px;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+.movie-list::before {
+  opacity: 0;
+  pointer-events: none;
+  content: '';
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: red;
+  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+.movie-list::after {
+  opacity: 0;
+  pointer-events: none;
+  content: '';
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  background: url(spinner.png) center center no-repeat;
+  background-size: 40px 40px;
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+.movie-list.pending::before,
+.movie-list.pending::after {
+  opacity: 1;
+}
+
+.overlay.loading {
+  opacity: 0.8
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 @media only screen and (max-width: 768px) {

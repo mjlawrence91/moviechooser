@@ -108,6 +108,7 @@ class App {
 
   chooseRandom (evt) {
     if (evt) evt.preventDefault()
+    this._showSpinner()
 
     const movies = this.fetchMovies()
     const filterEl = document.querySelector('.js-filter.active')
@@ -116,7 +117,12 @@ class App {
     const rand = Math.floor(Math.random() * filteredMovies.length)
     const {name} = filteredMovies[rand] || {name: 'No movies.'}
 
-    this.render(movies, name)
+    const delayRender = _ => {
+      this.render(movies, name)
+      this._hideSpinner()
+    }
+
+    setTimeout(delayRender, 3000)
   }
 
   removeMovie (evt) {
@@ -268,6 +274,15 @@ class App {
     const unselected = Array.from(document.querySelectorAll('.js-filter.active'))
     unselected.forEach(uns => uns.classList.remove('active'))
     evt.target.classList.add('active')
+  }
+
+  _showSpinner () {
+    document.querySelector('#selection').classList.add('pending')
+    document.querySelector('.overlay').classList.add('loading')
+  }
+  _hideSpinner () {
+    document.querySelector('#selection').classList.remove('pending')
+    document.querySelector('.overlay').classList.remove('loading')
   }
 }
 
