@@ -104,8 +104,8 @@ a.remove {
   opacity: 0.8;
 }*/
 
-[data-loading=true]::before,
-[data-loading=true]::after {
+#selection[data-loading=true]::before,
+#selection[data-loading=true]::after {
   opacity: 0.8;
 }
 
