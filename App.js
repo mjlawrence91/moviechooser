@@ -285,12 +285,10 @@ class App {
   }
 
   _showSpinner () {
-    document.querySelector('#selection').classList.add('pending')
-    document.querySelector('.overlay').classList.add('loading')
+    document.querySelector('#selection').setAttribute('data-loading', 'true')
   }
   _hideSpinner () {
-    document.querySelector('#selection').classList.remove('pending')
-    document.querySelector('.overlay').classList.remove('loading')
+    document.querySelector('#selection').removeAttribute('data-loading')
   }
 }
 
