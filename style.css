@@ -72,6 +72,7 @@ a.remove {
 #selection::before {
   opacity: 0;
   content: '';
+  pointer-events: none;
   position: absolute;
   background-color: #ddd;
   width: 100%;
@@ -107,6 +108,7 @@ a.remove {
 #selection[data-loading=true]::before,
 #selection[data-loading=true]::after {
   opacity: 0.8;
+  pointer-events: none;
 }
 
 @keyframes spin {
