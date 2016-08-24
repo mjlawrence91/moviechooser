@@ -3,9 +3,12 @@ moviechooser
 **moviechooser** is an app for choosing a random movie night idea from a predefined list.
 
 ## Technology
+
 ### Frontend
+
 * [Bootstrap](http://getbootstrap.com) [Paper](https://bootswatch.com/paper/) template from [Bootswatch](https://bootswatch.com/)
 * [Babel](https://babeljs.io/), [Underscore](http://underscorejs.org)
+
 ### Backend
 * [MongoDB](https://www.mongodb.com/)
 
