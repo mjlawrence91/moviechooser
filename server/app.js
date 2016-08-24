@@ -6,8 +6,8 @@ import errorHandler from './middleware/errorHandler'
 import routes from './routes'
 
 const staticPath = (process.env.NODE_ENV !== 'dev')
-  ? path.resolve(__dirname, '../dist')
-  : path.resolve(__dirname, '../')
+  ? path.resolve(__dirname, '../client/dist')
+  : path.resolve(__dirname, '../client')
 
 const app = express()
 app.set('x-powered-by', false)

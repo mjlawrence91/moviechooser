@@ -3,9 +3,9 @@
     "start": "node index",
     "deploy:start": "npm run deploy && node index",
     "deploy": "npm run babel && sh deploy.sh",
-    "babel": "babel App.js -d dist --minified",
+    "babel": "babel client/App.js -d dist --minified",
     "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
-    "watch": "babel App.js -w -d dist --source-maps inline"
+    "watch": "babel client/App.js -w -d client/dist --source-maps inline"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
