@@ -9,6 +9,7 @@ ehthumbs.db
 Thumbs.db
 
 archive
+config
 dist
 node_modules
 ROADMAP.md
