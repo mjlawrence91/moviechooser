@@ -1,11 +1,10 @@
 {
   "scripts": {
-    "start": "node index",
-    "deploy:start": "npm run deploy && node index",
-    "deploy": "npm run babel && sh deploy.sh",
-    "babel": "babel client/App.js -d dist --minified",
+    "start": "npm run deploy && node index",
+    "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files",
     "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
-    "watch": "babel client/App.js -w -d client/dist --source-maps inline"
+    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files",
+    "clean": "rm -rf client/dist"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
