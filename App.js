@@ -159,7 +159,6 @@ class App {
     this.renderWhosFilters = this.renderWhosFilters.bind(this)
     this.savetoStore = this.savetoStore.bind(this)
     this.addMovie = this.addMovie.bind(this)
-    this.chooseRandom = this.chooseRandom.bind(this)
     this.removeMovie = this.removeMovie.bind(this)
     this.removeFromStore = this.removeFromStore.bind(this)
     this._firstRender = this._firstRender.bind(this)
