@@ -10,7 +10,7 @@ export default {
   },
 
   create: async (req, res) => {
-    const body = (Object.keys(req.body).length) ? req.body : null;
+    const body = (Object.keys(req.body).length) ? req.body : null
 
     if (body) {
       const collection = db.collection('movies')
