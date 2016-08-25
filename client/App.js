@@ -17,6 +17,9 @@ class App {
     this._whosHtml = document.querySelector('#whos').innerHTML
     this._whosFiltersHtml = document.querySelector('#whosfilters').innerHTML
 
+    // Hold movies at top level
+    this._movies = []
+
     // Needed for mobile doubletap handler
     this._tappedTwice = false
 
@@ -25,8 +28,25 @@ class App {
   }
 
   init () {
-    this._firstRender()
-    this._addHandlers()
+    // Get list of movies and render
+    const request = new MovieRequest('/api/movies')
+
+    request.get().then(data => {
+      this._movies = data
+
+      // Render main view
+      this.render(this._movies)
+
+      // Load stored title if one present
+      this.renderTitle()
+
+      // Load options and filters for who suggested a movie
+      this.renderWhos()
+      this.renderWhosFilters()
+
+      // Load event handlers
+      this._addHandlers()
+    })
   }
 
   render (movies, selection) {
@@ -70,47 +90,33 @@ class App {
     })
   }
 
-  fetchMovies () {
-    const moviesString = localStorage.getItem('movies')
-    return JSON.parse(moviesString) || []
-  }
-
   savetoStore (newMovie) {
-    const movieList = this.fetchMovies()
-    const isUnique = movieList.filter(movie => movie.name === newMovie.name).length === 0
+    const isUnique = this._movies.filter(movie => movie.name === newMovie.name).length === 0
 
     if (isUnique) {
-      movieList.push(newMovie)
+      const request = new MovieRequest('/api/movies')
 
-      const moviesString = JSON.stringify(movieList)
-      localStorage.setItem('movies', moviesString)
+      request.post(newMovie).then(() => {
+        this._movies.push(newMovie)
+
+        this.render(this._movies)
+        this._clearFormValues()
+
+        // Re-focus name field for new entry
+        document.querySelector('input[name=movie]').focus()
+      })
     }
   }
 
   addMovie (evt) {
     if (evt) evt.preventDefault()
 
-    let movieName = ''
-    let who = ''
-
-    if (new FormData().get) {
-      const formData = new FormData(evt.target)
-      movieName = formData.get('movie')
-      who = formData.get('who')
-    } else { // Fix for iOS
-      movieName = document.querySelector('[name=movie]').value
-      who = document.querySelector('[name=who]').value
-    }
+    const movieName = document.querySelector('[name=movie]').value
+    const who = document.querySelector('[name=who]').value
 
     if (movieName && who) {
       const newModel = {name: movieName, who}
       this.savetoStore(newModel)
-
-      this.render(this.fetchMovies())
-      this._clearFormValues()
-
-      // Re-focus name field for new entry
-      document.querySelector('input[name=movie]').focus()
     }
   }
 
@@ -118,15 +124,20 @@ class App {
     if (evt) evt.preventDefault()
     this._showSpinner()
 
-    const movies = this.fetchMovies()
     const filterEl = document.querySelector('.js-filter.active')
-    const filteredMovies = (filterEl ? movies.filter(movie => movie.who === filterEl.innerHTML) : movies)
+    let filteredMovies = null
+
+    if (filterEl) {
+      filteredMovies = this._movies.filter(movie => movie.who === filterEl.innerHTML)
+    } else {
+      filteredMovies = this._movies
+    }
 
     const rand = Math.floor(Math.random() * filteredMovies.length)
     const {name} = filteredMovies[rand] || {name: 'No movies.'}
 
     const delayRender = _ => {
-      this.render(movies, name)
+      this.render(this._movies, name)
       this._hideSpinner()
     }
 
@@ -141,14 +152,16 @@ class App {
 
     const movieToDelete = movieLink.getAttribute('data-remove')
     this.removeFromStore(movieToDelete)
-    this.render(this.fetchMovies())
   }
 
   removeFromStore (movieToDelete) {
-    const movies = this.fetchMovies()
-    const moviesWithoutRemoved = movies.filter(movie => movie.name !== movieToDelete)
-    const moviesString = JSON.stringify(moviesWithoutRemoved)
-    localStorage.setItem('movies', moviesString)
+    const request = new MovieRequest(`/api/movies/${movieToDelete}`)
+
+    request.delete().then(() => {
+      const moviesWithoutRemoved = this._movies.filter(movie => movie._id !== movieToDelete)
+      this._movies = moviesWithoutRemoved
+      this.render(this._movies)
+    })
   }
 
   _createBindings () {
@@ -159,25 +172,12 @@ class App {
     this.renderWhosFilters = this.renderWhosFilters.bind(this)
     this.savetoStore = this.savetoStore.bind(this)
     this.addMovie = this.addMovie.bind(this)
+    this.chooseRandom = this.chooseRandom.bind(this)
     this.removeMovie = this.removeMovie.bind(this)
     this.removeFromStore = this.removeFromStore.bind(this)
-    this._firstRender = this._firstRender.bind(this)
     this._addHandlers = this._addHandlers.bind(this)
     this._saveTitleOnBlur = this._saveTitleOnBlur.bind(this)
     this._filterRandom = this._filterRandom.bind(this)
-  }
-
-  _firstRender () {
-    // Load movies and title, then render
-    const movies = this.fetchMovies()
-    this.render(movies)
-
-    // Load stored title if one present
-    this.renderTitle()
-
-    // Load options and filters for who suggested a movie
-    this.renderWhos()
-    this.renderWhosFilters()
   }
 
   _addHandlers () {

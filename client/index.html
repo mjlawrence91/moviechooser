@@ -62,7 +62,7 @@
 						<% movies.forEach(function (movie) { %>
 							<li class="movie">
 								<span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
-								<a class="remove" data-remove="<%- movie.name %>" href="#">
+								<a class="remove" data-remove="<%- movie._id %>" href="#">
 									<span class="movie-name"><%- movie.name %></span>
 								</a>
 							</li>
@@ -83,6 +83,7 @@
 		</script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+		<script src="MovieRequest.js"></script>
 		<script src="App.js"></script>
 	</body>
 </html>
