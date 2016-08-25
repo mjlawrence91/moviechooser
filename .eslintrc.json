@@ -3,7 +3,9 @@
     "localStorage": true,
     "FormData": true,
     "MouseEvent": true,
-    "_": true
+    "_": true,
+    "MovieRequest": true,
+    "XMLHttpRequest": true
   },
   "parser": "babel-eslint",
   "extends": "standard",
