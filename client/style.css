@@ -8,6 +8,8 @@ button:focus {
 }
 
 .header {
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 56px;
 	color: #FFF;
@@ -33,9 +35,9 @@ button:focus {
 }
 
 .well {
-  border-radius: 3px;
-  box-shadow: 0 3px 4px rgba(0,0,0,0.3);
-  border: 0;
+	border-radius: 3px;
+	box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+	border: 0;
 }
 
 #add, #choose {
@@ -57,8 +59,8 @@ button:focus {
 
 .label {
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
-  font-weight: normal;
-  text-transform: uppercase;
+	font-weight: normal;
+	text-transform: uppercase;
 }
 
 a.remove {
@@ -66,59 +68,59 @@ a.remove {
 }
 
 #selection {
-  position: relative;
+	position: relative;
 }
 
 #selection::before {
-  opacity: 0;
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  background-color: #ddd;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: 0;
-  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+	opacity: 0;
+	content: '';
+	pointer-events: none;
+	position: absolute;
+	background-color: #ddd;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0;
+	transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
 }
 
 #selection::after {
-  opacity: 0;
-  pointer-events: none;
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 40px;
-  height: 40px;
-  background: url(spinner.png) center center no-repeat;
-  background-size: 40px 40px;
-  animation-name: spin;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+	opacity: 0;
+	pointer-events: none;
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 40px;
+	height: 40px;
+	background: url(spinner.png) center center no-repeat;
+	background-size: 40px 40px;
+	animation-name: spin;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
 }
 
 /*.movie-list.pending::before,
 .movie-list.pending::after {
-  opacity: 0.8;
+	opacity: 0.8;
 }*/
 
 #selection[data-loading=true]::before,
 #selection[data-loading=true]::after {
-  opacity: 0.8;
-  pointer-events: none;
+	opacity: 0.8;
+	pointer-events: none;
 }
 
 @keyframes spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
 
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
 }
 
 @media only screen and (max-width: 768px) {
