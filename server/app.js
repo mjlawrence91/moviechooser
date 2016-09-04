@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import serveStatic from 'serve-static'
+import compression from 'compression'
 import errorHandler from './middleware/errorHandler'
 import routes from './routes'
 
@@ -13,8 +14,9 @@ const staticPath = (isProduction)
 const app = express()
 app.set('x-powered-by', false)
 app.use(bodyParser.json())
-app.use(errorHandler)
 app.use(serveStatic(staticPath))
+app.use(compression())
+app.use(errorHandler)
 
 if (!isProduction) {
   app.get('/debug', (req, res) => res.status(200).send('Hello World'))
