@@ -36,17 +36,17 @@ class App {
 
       // Render main view
       this.render(this._movies)
-
-      // Load stored title if one present
-      this.renderTitle()
-
-      // Load options and filters for who suggested a movie
-      this.renderWhos()
-      this.renderWhosFilters()
-
-      // Load event handlers
-      this._addHandlers()
     })
+
+    // Load stored title if one present
+    this.renderTitle()
+
+    // Load options and filters for who suggested a movie
+    this.renderWhos()
+    this.renderWhosFilters()
+
+    // Load event handlers
+    this._addHandlers()
   }
 
   render (movies, selection) {
@@ -76,9 +76,9 @@ class App {
     const renderWhosView = _.template(this._whosHtml)
     const whosSelect = document.querySelector('select')
 
-    let options = whosSelect.innerHTML
-    Object.keys(App.WHOS).forEach(who => { options += renderWhosView({who}) })
-    whosSelect.innerHTML = options
+    Object.keys(App.WHOS).forEach(who => {
+      whosSelect.innerHTML += renderWhosView({who})
+    })
   }
 
   renderWhosFilters () {
