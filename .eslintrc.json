@@ -1,11 +1,12 @@
 {
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
   "globals": {
-    "localStorage": true,
-    "FormData": true,
-    "MouseEvent": true,
     "_": true,
-    "MovieRequest": true,
-    "XMLHttpRequest": true
+    "MovieRequest": true
   },
   "parser": "babel-eslint",
   "extends": "standard",
