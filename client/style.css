@@ -35,7 +35,7 @@ button:focus {
 }
 
 .well {
-	border-radius: 3px;
+	border-radius: 2px;
 	box-shadow: 0 3px 4px rgba(0,0,0,0.3);
 	border: 0;
 }
@@ -101,11 +101,6 @@ a.remove {
 	animation-iteration-count: infinite;
 	transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
 }
-
-/*.movie-list.pending::before,
-.movie-list.pending::after {
-	opacity: 0.8;
-}*/
 
 #selection[data-loading=true]::before,
 #selection[data-loading=true]::after {
