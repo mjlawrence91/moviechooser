@@ -14,8 +14,8 @@ const staticPath = (isProduction)
 const app = express()
 app.set('x-powered-by', false)
 app.use(bodyParser.json())
-app.use(serveStatic(staticPath))
 app.use(compression())
+app.use(serveStatic(staticPath))
 app.use(errorHandler)
 
 if (!isProduction) {
