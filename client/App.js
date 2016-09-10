@@ -96,8 +96,8 @@ class App {
     if (isUnique) {
       const request = new MovieRequest('/api/movies')
 
-      request.post(newMovie).then(() => {
-        this._movies.push(newMovie)
+      request.post(newMovie).then((newModel) => {
+        this._movies.push(newModel)
 
         this.render(this._movies)
         this._clearFormValues()
