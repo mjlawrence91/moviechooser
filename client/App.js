@@ -2,6 +2,7 @@ class App {
   static get WHOS () {
     return {
       'Alex': 'info',
+      'Charl': 'success',
       'Matt': 'primary',
       'Rob': 'danger'
     }
