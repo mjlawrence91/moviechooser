@@ -3,7 +3,7 @@
     "start": "npm run deploy && node index",
     "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files",
     "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
-    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files",
+    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/",
     "clean": "rm -rf client/dist"
   },
   "devDependencies": {
