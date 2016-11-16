@@ -1,10 +1,10 @@
 class App {
   static get WHOS () {
     return {
-      'Alex': 'info',
-      'Charl': 'success',
-      'Matt': 'primary',
-      'Rob': 'danger'
+      'Alex': {primary: '#9C27B0'},
+      'Charl': {primary: '#4CAF50'},
+      'Matt': {primary: '#2196F3'},
+      'Rob': {primary: '#F44336'}
     }
   }
 
@@ -17,9 +17,10 @@ class App {
     this._listHtml = document.querySelector('#list').innerHTML
     this._whosHtml = document.querySelector('#whos').innerHTML
     this._whosFiltersHtml = document.querySelector('#whosfilters').innerHTML
+    this._rippleHandler = new RippleHandler()
 
-    // Hold movies at top level
-    this._movies = []
+    this.customElementsSupported = !!window.customElements
+    this.shadowDOMSupported = !!HTMLElement.prototype.attachShadow
 
     // Needed for mobile doubletap handler
     this._tappedTwice = false
@@ -29,15 +30,14 @@ class App {
   }
 
   init () {
-    // Get list of movies and render
-    const request = new MovieRequest('/api/movies')
-
-    request.get().then(data => {
-      this._movies = data
+    // For mobile browsers...
+    if (!this.customElementsSupported) {
+      // Load polyfills and Underscore library [TODO]
+      this._lazyLoadScript()
 
       // Render main view
       this.render(this._movies)
-    })
+    }
 
     // Load stored title if one present
     this.renderTitle()
@@ -45,6 +45,9 @@ class App {
     // Load options and filters for who suggested a movie
     this.renderWhos()
     this.renderWhosFilters()
+
+    // Enables button ripples
+    this._rippleHandler.init()
 
     // Load event handlers
     this._addHandlers()
@@ -74,20 +77,26 @@ class App {
   }
 
   renderWhos () {
-    const renderWhosView = _.template(this._whosHtml)
     const whosSelect = document.querySelector('select')
 
     Object.keys(App.WHOS).forEach(who => {
-      whosSelect.innerHTML += renderWhosView({who})
+      const newOption = document.createElement('option')
+      newOption.value = who
+      newOption.textContent = who
+      whosSelect.appendChild(newOption)
     })
   }
 
   renderWhosFilters () {
-    const renderWhosFiltersView = _.template(this._whosFiltersHtml)
-    const filtersContainer = document.querySelector('.filters')
+    const filtersContainer = document.querySelector('.filter-group')
 
-    Object.keys(App.WHOS).forEach(who => {
-      filtersContainer.innerHTML += renderWhosFiltersView({who, colours: App.WHOS})
+    Object.keys(App.WHOS).forEach((who) => {
+      const newFilter = document.createElement('button')
+      newFilter.classList.add('ripple', 'filter-btn', 'btn-sm', 'js-filter')
+      newFilter.style.backgroundColor = App.WHOS[who].primary
+      newFilter.innerText = who
+      newFilter.addEventListener('click', this._filterRandom)
+      filtersContainer.appendChild(newFilter)
     })
   }
 
@@ -184,7 +193,6 @@ class App {
   _addHandlers () {
     const form = document.querySelector('form')
     const title = document.querySelector('.header__title')
-    const filters = document.querySelectorAll('.js-filter')
 
     // Add handler for Choose button
     document.querySelector('#choose').addEventListener('click', this.chooseRandom)
@@ -208,9 +216,6 @@ class App {
 
     // Add doubletap handler for mobile
     document.addEventListener('touchstart', this._doubleTapHandler)
-
-    // Click handler for filters
-    Array.from(filters).forEach(filter => filter.addEventListener('click', this._filterRandom))
   }
 
   _doubleTapHandler (evt) {

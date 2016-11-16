@@ -9,6 +9,7 @@ ehthumbs.db
 Thumbs.db
 
 archive
+certs
 config
 dist
 node_modules

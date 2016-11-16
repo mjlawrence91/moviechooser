@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Movie Chooser</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<header class="header"></header>
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-lg-12">
-					<div class="well">
-						<form>
-							<fieldset>
-								<div class="form-group">
-									<label for="movie" class="col-xs-12 col-md-2 col-lg-2 control-label">Movie Name</label>
-									<div class="col-xs-12 col-md-10 col-lg-10">
-										<input type="text" class="form-control" placeholder="Enter an idea..." name="movie" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="who" class="col-xs-12 col-md-2 col-lg-2 control-label">Who?</label>
-									<div class="col-xs-12 col-md-10 col-lg-10">
-										<select class="form-control" name="who">
-											<option value=""></option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-xs-6 col-md-4 col-lg-4">
-										<button class="btn btn-primary btn-lg center-block" id="add">Add</button>
-									</div>
-									<div class="col-xs-6 col-md-4 col-lg-4">
-										<button class="btn btn-default btn-lg center-block" id="choose">Choose</button>
-									</div>
-									<div class="col-xs-12 col-md-4 col-lg-4 filters text-center">
-										<p class="filter-label">Filters</p>
-									</div>
-								</div>
-							</fieldset>
-						</form>
-					</div>
-				</div>
-			</div>
+  <head>
+    <title>Movie Chooser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div class="well movie-list" id="selection">
-					</div>
-				</div>
-			</div>
-		</div>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="styles/style.css">-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-		<script type="text/template" id="list">
-			<fieldset>
-				<% if (movies.length) { %>
-					<h4><%- selected %></h4>
-					<p>Click a movie's name to remove it from the list.</p>
-					<ul>
-						<% movies.forEach(function (movie) { %>
-							<li class="movie">
-								<span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
-								<a class="remove" data-remove="<%- movie._id %>" href="#">
-									<span class="movie-name"><%- movie.name %></span>
-								</a>
-							</li>
-						<% }); %>
-					</ul>
-				<% } else { %>
-					<h4>No movies yet...</h4>
-				<% } %>
-			</fieldset>
-		</script>
+    <link rel="import" href="elements/movie-list-item.html">
+    <link rel="import" href="elements/movie-list.html">
+  </head>
+  <body>
+    <header class="header"></header>
+    <div class="container">
+      <div class="row">
+        <div class="well">
+          <form novalidate>
+            <fieldset>
+              <div class="form-group">
+                <input type="text" class="form-control" name="movie" required/>
+                <span class="bar"></span>
+                <label for="movie" class="col-xs-12 col-md-2 col-lg-2 control-label">Movie Name</label>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="who" required>
+                  <option value=""></option>
+                </select>
+                <span class="bar"></span>
+                <label for="who" class="col-xs-12 col-md-2 col-lg-2 control-label">Who?</label>
+              </div>
+              <div class="button-group">
+                <button class="ripple btn-primary" id="add">Add</button>
+                <button class="ripple btn-default" id="choose">Choose</button>
+              </div>
+              <div class="filter-group">
+                <p class="filter-label">Filters</p>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
 
-		<script type="text/template" id="whos">
-			<option value="<%- who %>"><%- who %></option>
-		</script>
+      <div class="row">
+        <div class="well movie-list" id="selection">
+          <movie-list url="/api/movies"></movie-list>
+        </div>
+      </div>
+    </div>
 
-		<script type="text/template" id="whosfilters">
-			<button type="button" class="btn btn-<%- colours[who] %> btn-sm js-filter"><%- who %></button>
-		</script>
+    <script type="text/template" id="list">
+      <fieldset>
+        <% if (movies.length) { %>
+          <h4><%- selected %></h4>
+          <p>Click a movie's name to remove it from the list.</p>
+          <ul>
+            <% movies.forEach(function (movie) { %>
+              <li class="movie">
+                <span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
+                <a class="remove" data-remove="<%- movie._id %>" href="#">
+                  <span class="movie-name"><%- movie.name %></span>
+                </a>
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <h4>No movies yet...</h4>
+        <% } %>
+      </fieldset>
+    </script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-		<script src="MovieRequest.js"></script>
-		<script src="App.js"></script>
-	</body>
+    <script type="text/template" id="whos">
+      <option value="<%- who %>"><%- who %></option>
+    </script>
+
+    <script type="text/template" id="whosfilters">
+      <button class="ripple filter-btn btn-sm js-filter"><%- who %></button>
+    </script>
+
+    <!--<script src="lib/custom-elements.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.22/webcomponents.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <!--<script src="MovieRequest.js"></script>-->
+    <script src="RippleHandler.js"></script>
+    <script src="App.js"></script>
+  </body>
 </html>
