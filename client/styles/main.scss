@@ -1,0 +1,147 @@
+/*@import "node_modules/bootswatch/paper/variables";*/
+/*@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";*/
+/*@import "node_modules/bootswatch/paper/bootswatch";*/
+
+html, body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+body {
+  font-family: Roboto;
+}
+
+button:focus {
+	outline: 0 !important;
+}
+
+.header {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 56px;
+	color: #FFF;
+	background: #455a64;
+	font-size: 20px;
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),
+			0 2px 9px 1px rgba(0,0,0,.12),
+			0 4px 2px -2px rgba(0,0,0,.2);
+	padding: 16px 16px 0;
+	position: fixed;
+	z-index: 1;
+}
+
+.header__title {
+	color: #FFF;
+	font-weight: 400;
+	font-size: 20px;
+	margin: 0;
+}
+
+.container {
+	padding-top: 100px;
+}
+
+.well {
+	border-radius: 2px;
+	box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+	border: 0;
+}
+
+#add, #choose {
+	margin-top: 18px;
+}
+
+.filter-label {
+	margin-bottom: 0;
+	margin-top: 9px;
+}
+
+.movie {
+	font-size: 18px;
+}
+
+.movie-name {
+	margin-left: 5px;
+}
+
+.label {
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+a.remove {
+	color: #666;
+}
+
+movie-list,
+#selection {
+	position: relative;
+}
+
+#selection::before,
+movie-list::before {
+	opacity: 0;
+	content: '';
+	pointer-events: none;
+	position: absolute;
+	background-color: #ddd;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0;
+	transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+#selection::after,
+movie-list::after {
+	opacity: 0;
+	pointer-events: none;
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 40px;
+	height: 40px;
+	background: url(../spinner.png) center center no-repeat;
+	background-size: 40px 40px;
+	animation-name: spin;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+#selection[data-loading=true]::before,
+#selection[data-loading=true]::after,
+movie-list[loading=true]::before,
+movie-list[loading=true]::after {
+	opacity: 0.8;
+	pointer-events: none;
+}
+
+@keyframes spin {
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.container {
+		padding-top: 72px;
+	}
+
+	.title {
+		font-size: 30px;
+	}
+
+	[for=who] {
+		margin-top: 10px;
+		margin-bottom: auto;
+	}
+}

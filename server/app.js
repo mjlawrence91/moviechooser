@@ -18,6 +18,7 @@ const app = express()
 app.set('x-powered-by', false)
 app.use(bodyParser.json())
 app.use(compression())
+// app.use(serveStatic(`/static/${staticPath}`))
 app.use(serveStatic(staticPath))
 app.use(errorHandler)
 

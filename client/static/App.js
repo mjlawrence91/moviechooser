@@ -1,3 +1,5 @@
+'use strict'
+
 class App {
   static get WHOS () {
     return {
@@ -12,6 +14,16 @@ class App {
     return 13
   }
 
+  static get POLYFILLS () {
+    return {
+      underscore: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
+      webcomponentsjs: 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.23/webcomponents.min.js',
+      webcomponentsjsLocal: 'lib/webcomponents.min.js',
+      customelements: 'lib/custom-elements.min.js',
+      underscoreLocal: 'lib/underscore-min.js'
+    }
+  }
+
   constructor () {
     this._selectContainer = document.querySelector('#selection')
     this._listHtml = document.querySelector('#list').innerHTML
@@ -21,36 +33,83 @@ class App {
 
     this.customElementsSupported = !!window.customElements
     this.shadowDOMSupported = !!HTMLElement.prototype.attachShadow
+    this.htmlImportsSupported = ('import' in document.createElement('link'))
+
+    this._movies = []
+
+    console.info('Custom Elements supported', this.customElementsSupported)
+    console.info('Shadow DOM supported', this.shadowDOMSupported)
+    console.info('HTML Imports supported', this.htmlImportsSupported)
 
     // Needed for mobile doubletap handler
     this._tappedTwice = false
 
     // Ensures all methods are accessible throughout the class
     this._createBindings()
+
+    // Remove preload styles
+    this._selectContainer.classList.remove('preload')
+  }
+
+  _lazyLoadImport (src) {
+    return new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'import'
+      link.href = src
+      link.onload = resolve
+      link.onerror = reject
+      document.head.appendChild(link)
+    })
+  }
+
+  _lazyLoadScript (src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = src
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
+    })
   }
 
   init () {
-    // For mobile browsers...
-    if (!this.customElementsSupported) {
-      // Load polyfills and Underscore library [TODO]
-      this._lazyLoadScript()
-
-      // Render main view
-      this.render(this._movies)
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      // navigator.serviceWorker.register('./sw.js', {scope: '/'})
     }
 
-    // Load stored title if one present
-    this.renderTitle()
+    // For mobile browsers...
+    // if (!this.customElementsSupported) {
+      // Load polyfills and Underscore library [TODO]
+      // Promise.all([
+        // this._lazyLoadScript(App.POLYFILLS.underscore),App.POLYFILLS.underscore),
+        // this._lazyLoadScript(App.POLYFILLS.webcomponentsjs),
+        // this._lazyLoadScript(App.POLYFILLS.webcomponentsjsLocal),
+        // this._lazyLoadScript(App.POLYFILLS.customelements),
+        // this._lazyLoadScript(App.POLYFILLS.underscoreLocal)
+      // ]).then(_ => this.render(this._movies))
+        // .catch(error => console.error(error))
+    // } else {
+      Promise.all([
+        this._lazyLoadImport('/static/elements/movie-list-item.html'),
+        this._lazyLoadImport('/static/elements/movie-list.html')
+      ]).then(_ => {
+        // this.render(this._movies)
+        // Load stored title if one present
+        this.renderTitle()
 
-    // Load options and filters for who suggested a movie
-    this.renderWhos()
-    this.renderWhosFilters()
+        // Load options and filters for who suggested a movie
+        this.renderWhos()
+        this.renderWhosFilters()
 
-    // Enables button ripples
-    this._rippleHandler.init()
+        // Enables button ripples
+        this._rippleHandler.init()
 
-    // Load event handlers
-    this._addHandlers()
+        // Load event handlers
+        this._addHandlers()
+      })
+      .catch(error => console.error('Error loading HTML imports', error))
+    // }
   }
 
   render (movies, selection) {
@@ -68,27 +127,26 @@ class App {
 
   renderTitle () {
     const title = localStorage.getItem('title') || 'Movie Chooser'
-
-    const titleElement = document.createElement('h1')
-    titleElement.classList.add('header__title')
-    titleElement.innerHTML = title
-
-    document.querySelector('.header').appendChild(titleElement)
+    document.querySelector('.header__title').innerText = title
   }
 
   renderWhos () {
     const whosSelect = document.querySelector('select')
+    const fragment = document.createDocumentFragment()
 
     Object.keys(App.WHOS).forEach(who => {
       const newOption = document.createElement('option')
       newOption.value = who
       newOption.textContent = who
-      whosSelect.appendChild(newOption)
+      fragment.appendChild(newOption)
     })
+
+    whosSelect.appendChild(fragment)
   }
 
   renderWhosFilters () {
     const filtersContainer = document.querySelector('.filter-group')
+    const fragment = document.createDocumentFragment()
 
     Object.keys(App.WHOS).forEach((who) => {
       const newFilter = document.createElement('button')
@@ -96,8 +154,10 @@ class App {
       newFilter.style.backgroundColor = App.WHOS[who].primary
       newFilter.innerText = who
       newFilter.addEventListener('click', this._filterRandom)
-      filtersContainer.appendChild(newFilter)
+      fragment.appendChild(newFilter)
     })
+
+    filtersContainer.appendChild(fragment)
   }
 
   savetoStore (newMovie) {
@@ -132,26 +192,25 @@ class App {
 
   chooseRandom (evt) {
     if (evt) evt.preventDefault()
-    this._showSpinner()
+    const movieList = document.querySelector('movie-list')
 
-    const filterEl = document.querySelector('.js-filter.active')
-    let filteredMovies = null
-
-    if (filterEl) {
-      filteredMovies = this._movies.filter(movie => movie.who === filterEl.innerHTML)
-    } else {
-      filteredMovies = this._movies
+    if (movieList.hasAttribute('loading')) {
+      return
     }
 
-    const rand = Math.floor(Math.random() * filteredMovies.length)
-    const {name} = filteredMovies[rand] || {name: 'No movies.'}
+    requestAnimationFrame(_ => {
+      movieList.showSpinner()
 
-    const delayRender = _ => {
-      this.render(this._movies, name)
-      this._hideSpinner()
-    }
+      const delayRender = _ => {
+        const activeFilter = document.querySelector('.js-filter.active')
+        const filterText = (activeFilter) ? activeFilter.textContent : ''
 
-    setTimeout(delayRender, 3000)
+        movieList.chooseRandom(filterText)
+        movieList.hideSpinner()
+      }
+
+      setTimeout(delayRender, 3000)
+    })
   }
 
   removeMovie (evt) {
@@ -167,8 +226,10 @@ class App {
   removeFromStore (movieToDelete) {
     const request = new MovieRequest(`/api/movies/${movieToDelete}`)
 
-    request.delete().then(() => {
-      const moviesWithoutRemoved = this._movies.filter(movie => movie._id !== movieToDelete)
+    request.delete().then(_ => {
+      const moviesWithoutRemoved = this._movies
+        .filter(movie => movie._id !== movieToDelete)
+
       this._movies = moviesWithoutRemoved
       this.render(this._movies)
     })
@@ -224,6 +285,7 @@ class App {
       setTimeout(_ => { this._tappedTwice = false }, 300)
       return false
     }
+
     evt.preventDefault()
     evt.target.dispatchEvent(new MouseEvent('dblclick'))
   }
@@ -281,7 +343,8 @@ class App {
 
   _filterRandom (evt) {
     if (evt.target.classList.contains('active')) {
-      return evt.target.classList.remove('active')
+      evt.target.classList.remove('active')
+      return
     }
 
     const unselected = Array.from(document.querySelectorAll('.js-filter.active'))
@@ -298,4 +361,4 @@ class App {
 }
 
 const app = new App()
-window.addEventListener('load', app.init)
+window.addEventListener('load', _ => app.init())

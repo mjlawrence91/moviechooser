@@ -13,7 +13,7 @@ class MovieRequest {
     return new Promise((resolve, reject) => {
       this._xhr.open(method, this.path)
 
-      this._handleResponse = () => {
+      this._handleResponse = _ => {
         if (this._xhr.status >= 200 && this._xhr.status < 300) {
           const movies = JSON.parse(this._xhr.response)
           resolve(movies)

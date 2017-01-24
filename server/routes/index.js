@@ -2,14 +2,14 @@ import {ObjectId} from 'mongodb'
 import {db} from '../modules/DBConnection'
 
 export default {
-  read: async (req, res) => {
+  async read (req, res) {
     const collection = db.collection('movies')
     const query = (req.params.id) ? {_id: ObjectId(req.params.id)} : {}
     const movies = await collection.find(query).toArray()
     res.status(200).send(movies)
   },
 
-  create: async (req, res) => {
+  async create (req, res) {
     const body = (Object.keys(req.body).length) ? req.body : null
 
     if (body) {
@@ -22,7 +22,7 @@ export default {
     }
   },
 
-  delete: async (req, res) => {
+  async delete (req, res) {
     const collection = db.collection('movies')
 
     try {

@@ -1,15 +1,16 @@
-class MovieListItem extends HTMLElement {
-  static get observedAttributes () {
-    return ['name', 'colour', 'who']
-  }
+'use strict'
 
-  constructor (_doc) {
+class MovieListItem extends HTMLElement {
+  constructor () {
     super()
+
+    console.log('in MovieListItem constructor')
+
     const link = document.querySelector('link[rel=import][href*="movie-list-item"]')
-    const tmpl = link.import.querySelector('#movie-list-item-tmpl')
+    this._tmpl = link.import.querySelector('#movie-list-item-tmpl')
 
     this._root = this.attachShadow({mode: 'open'})
-    this._root.appendChild(tmpl.content.cloneNode(true))
+    this._root.appendChild(this._tmpl.content.cloneNode(true))
 
     this.removeMovie = this.removeMovie.bind(this)
   }
@@ -22,16 +23,6 @@ class MovieListItem extends HTMLElement {
   disconnectedCallback () {
     const removeLink = this._root.querySelector('.remove')
     removeLink.removeEventListener('click', this.removeMovie)
-  }
-
-  attributeChangedCallback (name, oldValue, newValue) {
-    switch (name) {
-      case 'colour':
-        break
-
-      default:
-        break
-    }
   }
 
   set id (_id) {
@@ -83,4 +74,12 @@ class MovieListItem extends HTMLElement {
   }
 }
 
-window.customElements.define('movie-list-item', MovieListItem)
+if ('customElements' in window) {
+  window.customElements.define('movie-list-item', MovieListItem)
+} else {
+  window.addEventListener('WebComponentsReady', _ => {
+    console.log('WebComponentsReady in MovieListItem.js')
+    window.customElements.define('movie-list-item', MovieListItem)
+  })
+}
+
