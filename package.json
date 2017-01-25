@@ -5,9 +5,9 @@
     "start": "npm run deploy && node index",
     "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
     "clean": "rm -rf client/dist",
-    "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files",
+    "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files --ignore client/dist/ client/bower_components/",
     "sass": "node-sass client/styles/*.scss client/dist/styles/style.css",
-    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/",
+    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/ client/bower_components/",
     "sass:watch": "node-sass -w client/styles/*.scss client/dist/styles/style.css"
   },
   "devDependencies": {
