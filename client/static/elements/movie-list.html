@@ -1,34 +1,39 @@
-<link rel="import" href="movie-list-item.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!--<link rel="import" href="movie-list-item.html">-->
 
-<template id="movie-list-tmpl">
-  <style>
-    :host {
-      display: block;
-      padding: 20px;
-    }
+<dom-module id="movie-list">
+  <template id="movie-list-tmpl">
+    <style>
+      :host {
+        display: block;
+        padding: 20px;
+      }
 
-    h4 {
-      color: #444;
-      font-weight: normal;
-      font-size: 24px;
-      margin: 10px 0;
-    }
+      h4 {
+        color: #444;
+        font-weight: normal;
+        font-size: 24px;
+        margin: 10px 0;
+      }
 
-    p {
-      color: #444;
-      font-size: 13px;
-    }
+      p {
+        color: #444;
+        font-size: 13px;
+      }
 
-    li.movie {
-      font-size: 18px;
-      margin: 0 5px;
-    }
-  </style>
+      li.movie {
+        font-size: 18px;
+        margin: 0 5px;
+      }
+    </style>
 
-  <h4 class="display">Click Choose to select random idea...</h4>
-  <p>Click a movie's name to remove it from the list.</p>
-  <ul></ul>
-</template>
+    <h4 class="display">Click Choose to select random idea...</h4>
+    <p>Click a movie's name to remove it from the list.</p>
+    <!--<ul>-->
+      <!--<slot name="list-items"></slot>-->
+    <!--</ul>-->
+  </template>
 
-<script src="/static/MovieRequest.js"></script>
-<script src="/static/elements/MovieList.js"></script>
+  <script src="/static/MovieRequest.js"></script>
+  <script src="/static/elements/MovieList.js"></script>
+</dom-module>

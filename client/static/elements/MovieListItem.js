@@ -1,26 +1,43 @@
 'use strict'
 
-class MovieListItem extends HTMLElement {
+class MovieListItem extends Polymer.Element {
+  static get observedAttributes () {
+    return ['id', 'name', 'who', 'colour']
+  }
+
+  static get is () {
+    return 'movie-list-item'
+  }
+
+  static get config () {
+    return {
+      properties: {
+        id: {type: String},
+        name: {type: String},
+        who: {type: String},
+        colour: {type: String}
+      }
+    }
+  }
+
   constructor () {
     super()
-
-    console.log('in MovieListItem constructor')
-
-    const link = document.querySelector('link[rel=import][href*="movie-list-item"]')
-    this._tmpl = link.import.querySelector('#movie-list-item-tmpl')
-
-    this._root = this.attachShadow({mode: 'open'})
-    this._root.appendChild(this._tmpl.content.cloneNode(true))
-
+    this._root = null
     this.removeMovie = this.removeMovie.bind(this)
   }
 
   connectedCallback () {
-    const removeLink = this._root.querySelector('.remove')
+    super.connectedCallback()
+    this._root = this.shadowRoot
+
+    const removeLink = this.shadowRoot.querySelector('.remove')
+    // const removeLink = this.querySelector('.remove')
     removeLink.addEventListener('click', this.removeMovie)
   }
 
   disconnectedCallback () {
+    super.disconnectedCallback()
+
     const removeLink = this._root.querySelector('.remove')
     removeLink.removeEventListener('click', this.removeMovie)
   }
@@ -74,12 +91,4 @@ class MovieListItem extends HTMLElement {
   }
 }
 
-if ('customElements' in window) {
-  window.customElements.define('movie-list-item', MovieListItem)
-} else {
-  window.addEventListener('WebComponentsReady', _ => {
-    console.log('WebComponentsReady in MovieListItem.js')
-    window.customElements.define('movie-list-item', MovieListItem)
-  })
-}
-
+window.customElements.define(MovieListItem.is, MovieListItem)

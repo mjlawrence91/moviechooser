@@ -1,8 +1,20 @@
 'use strict'
 
-class MovieList extends HTMLElement {
+class MovieList extends Polymer.Element {
   static get observedAttributes () {
     return ['url']
+  }
+
+  static get is () {
+    return 'movie-list'
+  }
+
+  static get config () {
+    return {
+      properties: {
+        url: {type: String}
+      }
+    }
   }
 
   constructor () {
@@ -10,13 +22,14 @@ class MovieList extends HTMLElement {
 
     console.log('in MovieList constructor')
 
-    const doc = document.currentScript.ownerDocument
-    this._tmpl = doc.querySelector('#movie-list-tmpl')
-    this._root = this.attachShadow({mode: 'open'})
-    this._root.appendChild(this._tmpl.content.cloneNode(true))
+    // const doc = document.currentScript.ownerDocument
+    // this._tmpl = doc.querySelector('#movie-list-tmpl')
+    // this._root = this.attachShadow({mode: 'open'})
+    // this._root.appendChild(this._tmpl.content.cloneNode(true))
 
     this._url = ''
     this._request = null
+    this._root = null
   }
 
   get url () {
@@ -38,6 +51,9 @@ class MovieList extends HTMLElement {
   }
 
   connectedCallback () {
+    super.connectedCallback()
+    this._root = this.shadowRoot
+
     this._url = this.getAttribute('url')
     this._request = new MovieRequest(this.url)
 
@@ -46,22 +62,29 @@ class MovieList extends HTMLElement {
       .catch(error => console.error(error))
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    if (name === 'url' && oldValue !== newValue) {
-      this.url = newValue
-    }
-  }
+  // attributeChangedCallback (name, oldValue, newValue) {
+  //   super.attributeChangedCallback()
+
+  //   if (name === 'url' && oldValue !== newValue) {
+  //     this.url = newValue
+  //   }
+  // }
 
   _loadMovies (movies) {
+    const docFragment = document.createDocumentFragment()
+    // movies.forEach(movie => {
     movies.forEach(movie => {
       const listItem = this._createMovieItem(movie)
-      const itemWrapper = document.createElement('li')
-      itemWrapper.classList.add('movie')
-      itemWrapper.appendChild(listItem)
+      docFragment.appendChild(listItem)
+      // console.log(listItem)
+      // const itemWrapper = document.createElement('li')
+      // itemWrapper.classList.add('movie')
+      // itemWrapper.appendChild(listItem)
 
-      const list = this._root.querySelector('ul')
-      list.appendChild(itemWrapper)
+      // const list = this._root.querySelector('[name=list-items]')
+      // list.appendChild(itemWrapper)
     })
+    this.appendChild(docFragment)
   }
 
   _createMovieItem (movie) {
@@ -102,10 +125,4 @@ class MovieList extends HTMLElement {
   }
 }
 
-if ('customElements' in window) {
-  window.customElements.define('movie-list', MovieList)
-} else {
-  window.addEventListener('WebComponentsReady', _ => {
-    window.customElements.define('movie-list', MovieList)
-  })
-}
+window.customElements.define(MovieList.is, MovieList)
