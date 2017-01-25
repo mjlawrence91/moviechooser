@@ -1,0 +1,25 @@
+{
+  "name": "movie-chooser",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Matt Lawrence <ninja570@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#2.0-preview",
+    "webcomponentsjs": "v1"
+  },
+  "resolutions": {
+    "webcomponentsjs": "v1"
+  }
+}
