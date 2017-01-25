@@ -9,6 +9,7 @@ ehthumbs.db
 Thumbs.db
 
 archive
+bower_components
 certs
 config
 dist
