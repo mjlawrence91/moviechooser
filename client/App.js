@@ -90,25 +90,33 @@ class App {
       // ]).then(_ => this.render(this._movies))
         // .catch(error => console.error(error))
     // } else {
-      Promise.all([
-        this._lazyLoadImport('/static/elements/movie-list-item.html'),
-        this._lazyLoadImport('/static/elements/movie-list.html')
-      ]).then(_ => {
+
+      this._lazyLoadImport('elements/movie-list-item.html')
+        .then(_ => {
+          this._lazyLoadImport('elements/movie-list.html')
+            .then(_ => {
+              this.renderTitle()
+
+              // Load options and filters for who suggested a movie
+              this.renderWhos()
+              this.renderWhosFilters()
+
+              // Enables button ripples
+              this._rippleHandler.init()
+
+              // Load event handlers
+              this._addHandlers()
+            })
+        })
+
+      // Promise.all([
+        // this._lazyLoadImport('elements/movie-list-item.html'),
+        // this._lazyLoadImport('elements/movie-list.html')
+      // ]).then(_ => {
         // this.render(this._movies)
         // Load stored title if one present
-        this.renderTitle()
 
-        // Load options and filters for who suggested a movie
-        this.renderWhos()
-        this.renderWhosFilters()
-
-        // Enables button ripples
-        this._rippleHandler.init()
-
-        // Load event handlers
-        this._addHandlers()
-      })
-      .catch(error => console.error('Error loading HTML imports', error))
+      // .catch(error => console.error('Error loading HTML imports', error))
     // }
   }
 

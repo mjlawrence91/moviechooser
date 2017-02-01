@@ -22,12 +22,14 @@ class MovieListItem extends Polymer.Element {
 
   constructor () {
     super()
+
     this._root = null
     this.removeMovie = this.removeMovie.bind(this)
   }
 
   connectedCallback () {
     super.connectedCallback()
+    console.log('connected MovieListItem element')
     this._root = this.shadowRoot
 
     const removeLink = this.shadowRoot.querySelector('.remove')

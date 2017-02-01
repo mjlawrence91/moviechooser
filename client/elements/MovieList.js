@@ -20,7 +20,7 @@ class MovieList extends Polymer.Element {
   constructor () {
     super()
 
-    console.log('in MovieList constructor')
+    // console.log('in MovieList constructor')
 
     // const doc = document.currentScript.ownerDocument
     // this._tmpl = doc.querySelector('#movie-list-tmpl')
@@ -52,14 +52,15 @@ class MovieList extends Polymer.Element {
 
   connectedCallback () {
     super.connectedCallback()
+    console.log('connected MovieList element')
+
     this._root = this.shadowRoot
-
     this._url = this.getAttribute('url')
-    this._request = new MovieRequest(this.url)
+    // this._request = new MovieRequest(this.url)
 
-    this._request.get()
-      .then(data => this._loadMovies(data))
-      .catch(error => console.error(error))
+    // this._request.get()
+    //   .then(data => this._loadMovies(data))
+    //   .catch(error => console.error(error))
   }
 
   // attributeChangedCallback (name, oldValue, newValue) {
