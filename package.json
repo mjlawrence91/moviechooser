@@ -2,40 +2,45 @@
   "name": "movie-chooser",
   "version": "2.0.0",
   "scripts": {
-    "start": "npm run deploy && node index",
-    "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
+    "start": "npm run deploy && node index.js",
+    "dev:nodemon": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
+    "dev": "gulp dev",
     "clean": "rm -rf client/dist",
     "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files --ignore client/dist/ client/bower_components/",
-    "sass": "node-sass client/styles/*.scss client/dist/styles/style.css",
-    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/ client/bower_components/",
-    "sass:watch": "node-sass -w client/styles/*.scss client/dist/styles/style.css"
+    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/ client/bower_components/"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
+    "babel-core": "^6.22.1",
     "babel-eslint": "6.0.2",
     "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.18.6",
+    "del": "^2.2.2",
     "eslint": "2.9.0",
     "eslint-config-standard": "^5.3.1",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-standard": "^1.3.2",
-    "nodemon": "^1.10.0",
-    "pify": "^2.3.0",
-    "spdy": "^3.4.4"
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.4.0",
+    "gulp-uglify": "^2.0.1",
+    "gulp-vulcanize": "^6.1.0",
+    "nodemon": "^1.10.0"
   },
   "dependencies": {
-    "@webcomponents/custom-elements": "^1.0.0-alpha.3",
     "babel-polyfill": "^6.13.0",
     "babel-preset-node5": "^11.1.0",
     "babel-register": "^6.11.6",
     "body-parser": "^1.15.2",
-    "bootstrap-sass": "^3.3.7",
-    "bootswatch": "^3.3.7",
     "chalk": "^1.1.3",
     "compression": "^1.6.2",
     "config": "^1.21.0",
     "express": "4.14.0",
     "mongodb": "^2.2.6",
-    "node-sass": "^3.11.2",
-    "serve-static": "1.11.1"
+    "pify": "^2.3.0",
+    "serve-static": "1.11.1",
+    "spdy": "^3.4.4"
   }
 }
