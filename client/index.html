@@ -4,21 +4,16 @@
     <title>Movie Chooser</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Movie Chooser">
+
+    <link rel="apple-touch-startup-image" href="/splash-startup.png">
     <link rel="manifest" href="/manifest.json">
 
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="styles/style.css">-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="style.css">
 
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <!--/*<script src="lib/custom-elements.min.js"></script>*/-->
-
-    <!--<link rel="import" href="/static/elements/movie-list-item.html">-->
-    <!--<link rel="import" href="/static/elements/movie-list.html">-->
-
     <style>
       * {
         box-sizing: border-box;
@@ -33,6 +28,49 @@
         overflow: hidden;
         font-family: 'Roboto', Arial, Helvetica, sans-serif;
         -webkit-font-smoothing: antialiased;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 56px;
+        background: #455a64;
+        box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),
+            0 2px 9px 1px rgba(0,0,0,.12),
+            0 4px 2px -2px rgba(0,0,0,.2);
+        padding: 0 16px;
+        position: fixed;
+        z-index: 1;
+      }
+
+      .container {
+        width: 100%;
+        padding: 15px;
+        padding-top: 75px;
+      }
+
+      .row {
+        background: #FFF;
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      .well {
+        border-radius: 2px;
+        border: 0;
+        box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+      }
+
+      movie-list, #selection {
+        position: relative;
+      }
+
+      #selection {
+        width: 100%;
+        height: 250px;
       }
     </style>
   </head>
@@ -116,7 +154,7 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>-->
     <!--<script src="lib/underscore-min.js"></script>-->
     <!--<script src="static/MovieRequest.js"></script>-->
-    <script src="/static/RippleHandler.js"></script>
-    <script defer src="/static/App.js"></script>
+    <script src="RippleHandler.js"></script>
+    <script defer src="App.js"></script>
   </body>
 </html>
