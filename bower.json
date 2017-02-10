@@ -1,0 +1,27 @@
+{
+  "name": "movie-chooser",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Matt Lawrence <ninja570@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "v1",
+    "html-imports": "webcomponents/html-imports"
+  },
+  "resolutions": {
+    "webcomponentsjs": "v1",
+    "custom-elements": "master",
+    "html-imports": "ac62b6528f"
+  }
+}
