@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import serveStatic from 'serve-static'
 import compression from 'compression'
+import cors from 'cors'
 import errorHandler from './middleware/errorHandler'
 import routes from './routes'
 import whos from './routes/whos'
@@ -12,14 +13,12 @@ const staticPath = (isProduction)
   ? path.resolve(__dirname, '../client/dist')
   : path.resolve(__dirname, '../client')
 
-// const staticPath = path.resolve(__dirname, '../client/dist')
-
 const app = express()
 app.set('x-powered-by', false)
 app.use(bodyParser.json())
 app.use(compression())
-// app.use(serveStatic(`/static/${staticPath}`))
 app.use(serveStatic(staticPath))
+app.use(cors())
 app.use(errorHandler)
 
 if (!isProduction) {
