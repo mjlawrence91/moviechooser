@@ -4,7 +4,7 @@ import {db} from 'config'
 let _instance = null
 
 function _resolveURL () {
-  return `mongodb://${db.host}:${db.port}/${db.name}`
+  return `mongodb://${db.username}:${db.password}@${db.host}:${db.port}/${db.name}`
 }
 
 const connect = async () => {
