@@ -1,3 +1,7 @@
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -8,7 +12,7 @@
   height: 56px;
   color: #FFF;
   background: #455a64;
-  opacity: 0.97;
+  opacity: 0.95;
   font-size: 20px;
   font-weight: 400;
   box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),
@@ -133,8 +137,7 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
-  background: #9C27B0;
-  /*background: #594563;*/
+  background: #5264AE;
   color: #FFF;
   padding: 10px 16px;
   border-radius: 3px;
@@ -223,6 +226,7 @@ button:focus {
   width: 100%;
   height: auto;
   padding: 20px;
+  color: #444;
 }
 
 movie-list::before {
