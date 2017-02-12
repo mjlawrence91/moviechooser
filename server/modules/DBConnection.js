@@ -4,7 +4,8 @@ import {MongoClient} from 'mongodb'
 let _instance = null
 
 function _resolveURL () {
-  return `mongodb://${db.host}:${db.port}/${db.name}`
+  const creds = (db.username && db.password) ? `${db.username}:${db.password}@` : ''
+  return `mongodb://${creds}${db.host}:${db.port}/${db.name}`
 }
 
 const connect = async _ => {
