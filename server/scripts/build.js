@@ -1,6 +1,6 @@
 #! /usr/bin/node
 import path from 'path'
-import {mv} from 'shelljs'
+import {cp} from 'shelljs'
 
 const rootPath = path.resolve(__dirname, '../../', 'client')
 
@@ -15,4 +15,4 @@ const files = [
 ]
 
 const paths = files.map(file => rootPath + '/' + file)
-mv(...paths, path.join(rootPath, 'dist'))
+cp(...paths, path.join(rootPath, 'dist'))
