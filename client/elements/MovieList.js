@@ -41,7 +41,10 @@ class MovieList extends HTMLElement {
     this._request = new MovieRequest(this.url)
 
     this._request.get()
-      .then(data => this._loadMovies(data))
+      .then(data => {
+        this._loadMovies(data)
+        document.querySelector('.preload').remove('active')
+      })
       .catch(error => console.error(error))
   }
 
