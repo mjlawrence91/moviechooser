@@ -8,12 +8,6 @@
     <meta name="apple-mobile-web-app-title" content="Movie Chooser">
     <link rel="manifest" href="manifest.json">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <script defer src="RippleHandler.js"></script>
-    <script defer src="App.js"></script>
-
     <style>
       * {
         box-sizing: border-box;
@@ -26,11 +20,44 @@
         background: #FAFAFA;
         width: 100%;
         height: 100%;
-        font-family: 'Roboto', Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         -webkit-font-smoothing: antialiased;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
+
+      .preload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 40px;
+        background-color: #ddd;
+        color: #444;
+
+        /*will-change: transform, opacity;*/
+        will-change: transform;
+        /*opacity: 0;*/
+        transform: translateY(-25px) scaleY(0);
+        /*transition: opacity   0.3s cubic-bezier(0,0,0.3,1),
+                    transform 0.3s cubic-bezier(0,0,0.3,1);*/
+        transition: transform 0.3s cubic-bezier(0,0,0.3,1);
+      }
+
+      .preload.active {
+        /*opacity: 0.95;*/
+        transform: none;
+      }
     </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="style.css">
+
+    <script defer src="RippleHandler.js"></script>
+    <script defer src="App.js"></script>
   </head>
   <body>
     <header class="header">
@@ -67,8 +94,11 @@
       </div>
 
       <div class="row">
-        <div class="well movie-list preload" id="selection">
-          <movie-list url="/api/movies"></movie-list> <!-- Development URL -->
+        <div class="well movie-list" id="selection">
+          <div class="preload active">
+            <div class="preload-text">Loading movies...</div>
+          </div>
+          <movie-list url="/api/movies"></movie-list>
         </div>
       </div>
     </div>
