@@ -9,11 +9,6 @@ import routes from './routes'
 import whos from './routes/whos'
 
 const isProduction = (process.env.NODE_ENV !== 'dev')
-// const staticPath = (isProduction)
-//   ? path.resolve(__dirname, '../client/dist')
-//   : path.resolve(__dirname, '../client')
-
-// [zzz] Is that it?
 const staticPath = path.resolve(__dirname, '../client/dist')
 
 const app = express()
