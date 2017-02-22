@@ -4,13 +4,19 @@
   "scripts": {
     "preinstall": "bower install",
     "clean": "rm -rf client/dist",
-    "babel": "babel client/ -d client/dist/ --minified --ignore client/bower_components/,client/lib",
+    
+    "babel": "babel client/ -d client/dist/ --minified --ignore client/dist/,client/bower_components/,client/lib",
     "build": "babel-node server/scripts/build.js",
     "deploy": "npm run clean && npm run babel && npm run build",
     "start": "npm run deploy && node index",
-    "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
-    "babel:watch": "babel client/ -w -d client/dist/ --source-maps inline --ignore client/dist/",
-    "watch": "npm run clean && npm run babel:watch"
+    
+    "dev:babel": "babel client/ -d client/dist/ --source-maps inline --ignore client/dist/,client/bower_components/,client/lib",
+    "dev:deploy": "npm run clean && npm run dev:babel && npm run build",
+    "dev:start": "npm run dev:deploy && node index",
+    "client:watch": "nodemon --watch client/ --ignore client/dist --exec npm run dev:deploy",
+    "server:watch": "nodemon --watch server/ --exec npm run dev:start",
+    "dev:windows": "set NODE_ENV=dev&npm run server:watch & client:watch",
+    "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run dev:start"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
