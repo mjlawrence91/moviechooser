@@ -2,6 +2,7 @@
   "name": "movie-chooser",
   "version": "2.0.0",
   "scripts": {
+    "preinstall": "bower install",
     "clean": "rm -rf client/dist",
     "babel": "babel client/ -d client/dist/ --minified --ignore client/bower_components/,client/lib",
     "build": "babel-node server/scripts/build.js",
