@@ -56,6 +56,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="style.css">
 
+    <script defer src="lib/native-shim.js"></script>
     <script defer src="RippleHandler.js"></script>
     <script defer src="App.js"></script>
   </head>
@@ -98,7 +99,9 @@
           <div class="preload active">
             <div class="preload-text">Loading movies...</div>
           </div>
-          <movie-list url="/api/movies"></movie-list>
+          <!--<movie-list url="/api/movies"></movie-list>  Development URL -->
+          <!-- Production URL-->
+          <movie-list url="https://moviechooser.mjl-app.eu/api/movies"></movie-list>
         </div>
       </div>
     </div>

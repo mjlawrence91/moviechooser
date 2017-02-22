@@ -1,6 +1,6 @@
 #! /usr/bin/node
 import path from 'path'
-import {cp} from 'shelljs'
+import {mkdir, cp} from 'shelljs'
 import chalk from 'chalk'
 
 const rootPath = path.resolve(__dirname, '../../', 'client')
@@ -25,5 +25,10 @@ const elementFiles = [
 // dist/elements directory, so doing it separately.
 const elementPaths = elementFiles.map(file => rootPath + '/' + file)
 cp('-R', ...elementPaths, path.join(rootPath, 'dist/elements'))
+
+// Include native-shim.js so that v1 custom elements work when transpiled
+const nativeShimPath = path.join(rootPath, 'bower_components/custom-elements/src/native-shim.js')
+mkdir('-p', path.join(rootPath, 'dist/lib'))
+cp('-R', nativeShimPath, path.join(rootPath, 'dist/lib'))
 
 console.log(chalk.green('All static assets built.'))
