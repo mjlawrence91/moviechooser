@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "webcomponentsjs": "v1",
-    "html-imports": "webcomponents/html-imports"
+    "html-imports": "webcomponents/html-imports",
+    "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.4"
   },
   "resolutions": {
     "webcomponentsjs": "v1",
