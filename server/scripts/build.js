@@ -1,6 +1,7 @@
 #! /usr/bin/node
 import path from 'path'
 import {cp} from 'shelljs'
+import chalk from 'chalk'
 
 const rootPath = path.resolve(__dirname, '../../', 'client')
 
@@ -9,10 +10,20 @@ const files = [
   'manifest.json',
   'style.css',
   'robots.txt',
-  'spinner.png',
-  'elements/movie-list.html',
-  'elements/movie-list-item.html'
+  'spinner.png'
 ]
 
 const paths = files.map(file => rootPath + '/' + file)
 cp(...paths, path.join(rootPath, 'dist'))
+
+const elementFiles = [
+  'elements/movie-list.html',
+  'elements/movie-list-item.html'
+]
+
+// Even passing the -R flag doesn't put the element HTML files in the
+// dist/elements directory, so doing it separately.
+const elementPaths = elementFiles.map(file => rootPath + '/' + file)
+cp('-R', ...elementPaths, path.join(rootPath, 'dist/elements'))
+
+console.log(chalk.green('All static assets built.'))

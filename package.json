@@ -3,10 +3,13 @@
   "version": "2.0.0",
   "scripts": {
     "clean": "rm -rf client/dist",
+    "babel": "babel client/ -d client/dist/ --minified --ignore client/bower_components/,client/lib",
+    "build": "babel-node server/scripts/build.js",
+    "deploy": "npm run clean && npm run babel && npm run build",
     "start": "npm run deploy && node index",
-    "deploy": "npm run clean && babel client/ -d client/dist/ --minified --copy-files",
     "dev": "NODE_ENV=dev nodemon --watch server/ --exec npm run start",
-    "watch": "npm run clean && babel client/ -w -d client/dist/ --source-maps inline --copy-files  --ignore client/dist/"
+    "babel:watch": "babel client/ -w -d client/dist/ --source-maps inline --ignore client/dist/",
+    "watch": "npm run clean && npm run babel:watch"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
