@@ -14,7 +14,7 @@ const files = [
 ]
 
 const paths = files.map(file => rootPath + '/' + file)
-cp(...paths, path.join(rootPath, 'dist'))
+cp('-u', ...paths, path.join(rootPath, 'dist'))
 
 const elementFiles = [
   'elements/movie-list.html',
@@ -24,11 +24,11 @@ const elementFiles = [
 // Even passing the -R flag doesn't put the element HTML files in the
 // dist/elements directory, so doing it separately.
 const elementPaths = elementFiles.map(file => rootPath + '/' + file)
-cp('-R', ...elementPaths, path.join(rootPath, 'dist/elements'))
+cp('-Ru', ...elementPaths, path.join(rootPath, 'dist/elements'))
 
 // Include native-shim.js so that v1 custom elements work when transpiled
 const nativeShimPath = path.join(rootPath, 'bower_components/custom-elements/src/native-shim.js')
 mkdir('-p', path.join(rootPath, 'dist/lib'))
-cp('-R', nativeShimPath, path.join(rootPath, 'dist/lib'))
+cp('-Ru', nativeShimPath, path.join(rootPath, 'dist/lib'))
 
 console.log(chalk.green('All static assets built.'))
