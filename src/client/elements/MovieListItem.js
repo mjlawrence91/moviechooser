@@ -60,19 +60,28 @@ export default class MovieListItem extends HTMLElement {
     this.innerText = _name
   }
 
+  get name () {
+    return this._root.querySelector('.movie-name').innerText
+  }
+
   set who (_who) {
     this.setAttribute('who', _who)
   }
 
+  get who () {
+    return this.getAttribute('who')
+  }
+
   removeMovie (evt) {
     if (evt) evt.preventDefault()
+
     const removeLink = this._root.querySelector('.remove')
     const movieToDelete = removeLink.getAttribute('remove')
 
-    const request = this.parentElement.request
+    const {request, url: basePath} = this.parentElement
+    request.path = `${basePath}/${movieToDelete}`
 
-    request.delete(movieToDelete)
-      .then(_ => this.remove())
+    request.delete().then(_ => this.remove())
       .catch(_ => this._errorHandler('This movie doesn\'t exist. Oops.'))
   }
 

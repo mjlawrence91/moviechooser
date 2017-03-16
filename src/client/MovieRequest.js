@@ -6,13 +6,25 @@ export default class MovieRequest {
       return new Error('No path defined.')
     }
 
-    this.path = path
+    this._path = path
     this._xhr = new XMLHttpRequest()
+  }
+
+  set path (_path) {
+    if (!_path) {
+      return new Error('No path defined.')
+    }
+
+    this._path = _path
+  }
+
+  get path () {
+    return this._path
   }
 
   _send (method, body) {
     return new Promise((resolve, reject) => {
-      this._xhr.open(method, this.path)
+      this._xhr.open(method, this._path)
 
       this._handleResponse = _ => {
         if (this._xhr.status >= 200 && this._xhr.status < 300) {

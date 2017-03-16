@@ -103,6 +103,24 @@ class MovieList extends HTMLElement {
     }
   }
 
+  addMovie (formValues) {
+    const movieItems = Array.from(this.querySelectorAll('movie-list-item'))
+    const isUnique = movieItems.filter(movie => formValues.name === movie.name).length === 0
+
+    if (isUnique) {
+      this._request.path = this.url
+
+      return this._request.post(formValues).then(newMovie => {
+        const newItem = this._createMovieItem(newMovie)
+        this.appendChild(newItem)
+      })
+    } else {
+      // [TODO] Display this to the screen.
+      console.warn(`${formValues.who} has already suggested ${formValues.name}. Had you forgotten?`)
+      return Promise.resolve()
+    }
+  }
+
   showSpinner () {
     this.setAttribute('loading', 'true')
   }

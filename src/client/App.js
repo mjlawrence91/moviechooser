@@ -1,6 +1,5 @@
 'use strict'
 
-import MovieRequest from './MovieRequest'
 import RippleHandler from './RippleHandler'
 
 class App {
@@ -36,41 +35,13 @@ class App {
   }
 
   constructor (window) {
-    this._selectContainer = document.querySelector('#selection')
-    this._listHtml = document.querySelector('#list').innerHTML
-    this._whosHtml = document.querySelector('#whos').innerHTML
-    this._whosFiltersHtml = document.querySelector('#whosfilters').innerHTML
     this._rippleHandler = new RippleHandler()
-
-    this._movies = []
 
     // Needed for mobile doubletap handler
     this._tappedTwice = false
 
     // Ensures all methods are accessible throughout the class
     this._createBindings()
-  }
-
-  _lazyLoadScript (src) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = src
-      script.onload = resolve
-      script.onerror = reject
-      document.head.appendChild(script)
-    })
-  }
-
-  _lazyLoadImport (href) {
-    return new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'import'
-      link.async = true
-      link.href = href
-      link.onload = resolve
-      link.onerror = error => reject(`Error occurred loading HTML imports: ${error}`)
-      document.head.appendChild(link)
-    })
   }
 
   bootstrap () {
@@ -107,8 +78,6 @@ class App {
 
       // Load event handlers
       this._addHandlers()
-
-      // return 'The app is initialised'
     }).catch(error => console.error('Failed to load polyfills', error))
 
     // Load stored title if one present
@@ -116,19 +85,6 @@ class App {
 
     // Load select options for who suggested a movie
     this.renderWhos()
-  }
-
-  render (movies, selection) {
-    const selected = selection || 'Click Choose to select random idea...'
-    const renderSelectView = _.template(this._listHtml)
-    const html = renderSelectView({selected, movies, colours: App.WHOS})
-    this._selectContainer.innerHTML = html
-
-    if (movies.length) {
-      const removes = document.querySelectorAll('a.remove')
-      const removesArray = Array.from(removes)
-      removesArray.forEach(remove => remove.addEventListener('click', this.removeMovie))
-    }
   }
 
   renderTitle () {
@@ -167,21 +123,13 @@ class App {
   }
 
   savetoStore (newMovie) {
-    const isUnique = this._movies.filter(movie => movie.name === newMovie.name).length === 0
-
-    if (isUnique) {
-      const request = new MovieRequest('/api/movies')
-
-      request.post(newMovie).then((newModel) => {
-        this._movies.push(newModel)
-
-        this.render(this._movies)
-        this._clearFormValues()
-
-        // Re-focus name field for new entry
-        document.querySelector('input[name=movie]').focus()
-      })
-    }
+    // Add movie to list
+    const movieList = document.querySelector('movie-list')
+    movieList.addMovie(newMovie).then(_ => {
+      // Clear form and re-focus name field for new entry
+      this._clearFormValues()
+      document.querySelector('input[name=movie]').focus()
+    }).catch(error => console.error(error))
   }
 
   addMovie (evt) {
@@ -191,8 +139,11 @@ class App {
     const who = document.querySelector('[name=who]').value
 
     if (movieName && who) {
-      const newModel = {name: movieName, who}
-      this.savetoStore(newModel)
+      const newMovie = {name: movieName, who}
+      this.savetoStore(newMovie)
+    } else {
+      // [TODO] Display this to the screen.
+      console.warn('You\'ve forgotten to provide some information. Try again...')
     }
   }
 
@@ -219,39 +170,36 @@ class App {
     })
   }
 
-  removeMovie (evt) {
-    if (evt) evt.preventDefault()
-
-    const movieLink = evt.target.parentNode
-    movieLink.removeEventListener('click', this.removeMovie)
-
-    const movieToDelete = movieLink.getAttribute('data-remove')
-    this.removeFromStore(movieToDelete)
+  _lazyLoadScript (src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = src
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
+    })
   }
 
-  removeFromStore (movieToDelete) {
-    const request = new MovieRequest(`/api/movies/${movieToDelete}`)
-
-    request.delete().then(_ => {
-      const moviesWithoutRemoved = this._movies
-        .filter(movie => movie._id !== movieToDelete)
-
-      this._movies = moviesWithoutRemoved
-      this.render(this._movies)
+  _lazyLoadImport (href) {
+    return new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'import'
+      link.async = true
+      link.href = href
+      link.onload = resolve
+      link.onerror = error => reject(`Error occurred loading HTML imports: ${error}`)
+      document.head.appendChild(link)
     })
   }
 
   _createBindings () {
     this.init = this.init.bind(this)
-    this.render = this.render.bind(this)
     this.renderTitle = this.renderTitle.bind(this)
     this.renderWhos = this.renderWhos.bind(this)
     this.renderWhosFilters = this.renderWhosFilters.bind(this)
     this.savetoStore = this.savetoStore.bind(this)
     this.addMovie = this.addMovie.bind(this)
     this.chooseRandom = this.chooseRandom.bind(this)
-    this.removeMovie = this.removeMovie.bind(this)
-    this.removeFromStore = this.removeFromStore.bind(this)
     this._addHandlers = this._addHandlers.bind(this)
     this._doubleTapHandler = this._doubleTapHandler.bind(this)
     this._saveTitleOnBlur = this._saveTitleOnBlur.bind(this)
@@ -259,14 +207,13 @@ class App {
   }
 
   _addHandlers () {
-    const form = document.querySelector('form')
     const title = document.querySelector('.header__title')
 
     // Add handler for Choose button
     document.querySelector('#choose').addEventListener('click', this.chooseRandom)
 
     // Add handler to submit form
-    form.addEventListener('submit', this.addMovie)
+    document.querySelector('form').addEventListener('submit', this.addMovie)
 
     // Add handler for editing title
     title.addEventListener('dblclick', evt => {
@@ -357,13 +304,6 @@ class App {
     const unselected = Array.from(document.querySelectorAll('.js-filter.active'))
     unselected.forEach(uns => uns.classList.remove('active'))
     evt.target.classList.add('active')
-  }
-
-  _showSpinner () {
-    document.querySelector('#selection').setAttribute('data-loading', 'true')
-  }
-  _hideSpinner () {
-    document.querySelector('#selection').removeAttribute('data-loading')
   }
 }
 

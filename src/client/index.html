@@ -104,34 +104,5 @@
         </div>
       </div>
     </div>
-
-    <script type="text/template" id="list">
-      <fieldset>
-        <% if (movies.length) { %>
-          <h4><%- selected %></h4>
-          <p>Click a movie's from the list.</p>
-          <ul>
-            <% movies.forEach(function (movie) { %>
-              <li class="movie">
-                <span class="label label-<%= colours[movie.who] %>"><%- movie.who + ':' %></span>
-                <a class="remove" data-remove="<%- movie._id %>" href="#">
-                  <span class="movie-name"><%- movie.name %></span>
-                </a>
-              </li>
-            <% }); %>
-          </ul>
-        <% } else { %>
-          <h4>No movies yet...</h4>
-        <% } %>
-      </fieldset>
-    </script>
-
-    <script type="text/template" id="whos">
-      <option value="<%- who %>"><%- who %></option>
-    </script>
-
-    <script type="text/template" id="whosfilters">
-      <button class="ripple filter-btn btn-sm js-filter"><%- who %></button>
-    </script>
   </body>
 </html>
