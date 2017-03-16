@@ -5,14 +5,11 @@
     "node": true
   },
   "globals": {
-    "_": true,
-    "MovieRequest": true,
-    "RippleHandler": true
+    "_": true
   },
   "parser": "babel-eslint",
   "extends": "standard",
   "rules": {
-    "arrow-parens": 0,
-    "no-multiple-empty-lines": 0
+    "arrow-parens": 0
   }
 }
