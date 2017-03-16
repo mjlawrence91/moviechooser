@@ -13,16 +13,14 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "dist",
+    "config"
   ],
   "dependencies": {
-    "webcomponentsjs": "v1",
-    "html-imports": "webcomponents/html-imports",
-    "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.4"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#v1"
   },
   "resolutions": {
-    "webcomponentsjs": "v1",
-    "custom-elements": "master",
-    "html-imports": "ac62b6528f"
+    "webcomponentsjs": "v1"
   }
 }
