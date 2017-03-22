@@ -48,8 +48,8 @@ export default class RippleHandler {
       elem.appendChild(ripple)
 
       ripple.classList.add('ripple-effect')
-      ripple.style.width = clientWidth
-      ripple.style.height = clientHeight
+      ripple.style.width = `${clientWidth}px`
+      ripple.style.height = `${clientHeight}px`
       ripple.style.left = `${offsetX - (clientWidth / 2)}px`
       ripple.style.top = `${offsetY - (clientHeight / 2)}px`
 
