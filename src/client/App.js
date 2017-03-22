@@ -46,9 +46,9 @@ class App {
 
   bootstrap () {
     // Register service worker
-    // if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
     // navigator.serviceWorker.register('./sw.js', {scope: '/'})
-    // }
+    }
 
     // Load webcomponents polyfills and HTML imports
     return new Promise((resolve, reject) => {
