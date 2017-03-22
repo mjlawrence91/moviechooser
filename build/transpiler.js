@@ -1,6 +1,6 @@
 'use strict'
 
-const rollup = require('rollup').rollup
+const { rollup } = require('rollup')
 const babel = require('rollup-plugin-babel')
 
 const entries = [
