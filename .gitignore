@@ -15,3 +15,4 @@ config
 dist
 node_modules
 ROADMAP.md
+ecosystem.json
