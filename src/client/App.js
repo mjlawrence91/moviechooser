@@ -18,7 +18,8 @@ class App {
 
   static get POLYFILLS () {
     return {
-      wcLoader: 'lib/webcomponents-es5-loader.js'
+      wcLoader: 'lib/webcomponents-loader.js',
+      ceAdapter: 'lib/custom-elements-es5-adapter.js'
     }
   }
 
@@ -53,7 +54,10 @@ class App {
     // Load webcomponents polyfills and HTML imports
     return new Promise((resolve, reject) => {
       // Load polyfills
-      this._lazyLoadScript(App.POLYFILLS.wcLoader).then(result => {
+      Promise.all([
+        this._lazyLoadScript(App.POLYFILLS.ceAdapter),
+        this._lazyLoadScript(App.POLYFILLS.wcLoader)
+      ]).then(result => {
         // Load HTML imports
         return Promise.all([
           this._lazyLoadImport('elements/movie-list.html'),

@@ -16,7 +16,7 @@
     "copy-all": "npm run copy-index -s && npm run copy-server && npm run copy-config -s && npm run copy-client && npm run copy-lib",
     "copy-client": "copy \"src/client/**/*.*\" \"!src/client/styles/**/*.*\" dist/client",
     "copy-config": "cp -R src/config dist",
-    "copy-lib": "cp -R bower_components/webcomponentsjs/webcomponents-*.js dist/client/lib",
+    "copy-lib": "cp -R bower_components/webcomponentsjs/webcomponents-*.js bower_components/webcomponentsjs/custom-elements-es5-adapter.js dist/client/lib",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
     "build-css": "node build/minifyStyles.js",
