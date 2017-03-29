@@ -4,7 +4,7 @@
   "scripts": {
     "preinstall": "bower install",
     "build": "npm run clean -s && npm run make-dist -s && npm run make-client -s && npm run make-styles -s && npm run make-lib -s && npm run copy-all && npm run build-css && npm run build-js",
-    "start": "node index.js",
+    "start": "NODE_CONFIG_DIR=dist/config node dist/index.js",
     "dev": "npm run build && parallelshell \"npm run watch\" \"npm run serve\"",
     "serve": "NODE_ENV=dev NODE_CONFIG_DIR=dist/config nodemon -q -e js,json dist/index.js",
     "watch": "npm-watch",
@@ -19,8 +19,8 @@
     "copy-lib": "cp -R bower_components/webcomponentsjs/webcomponents-*.js bower_components/webcomponentsjs/custom-elements-es5-adapter.js dist/client/lib",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
-    "build-css": "node build/minifyStyles.js",
-    "build-js": "node build/transpiler.js"
+    "build-css": "babel-node build/minifyStyles.js",
+    "build-js": "babel-node build/transpiler.js"
   },
   "watch": {
     "build-css": {
