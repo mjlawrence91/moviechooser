@@ -65,7 +65,7 @@ class App {
   }
 
   init () {
-    this.bootstrap().then(result => {
+    this.bootstrap().then(_ => {
       console.info('Custom Elements supported', this.customElementsSupported)
       console.info('Shadow DOM supported', this.shadowDOMSupported)
       console.info('HTML Imports supported', this.htmlImportsSupported)
@@ -78,7 +78,7 @@ class App {
 
       // Load event handlers
       this._addHandlers()
-    }).catch(error => console.error('Failed to load polyfills', error))
+    }).catch(error => console.error(error))
 
     // Load stored title if one present
     this.renderTitle()
@@ -144,6 +144,7 @@ class App {
     } else {
       // [TODO] Display this to the screen.
       console.warn('You\'ve forgotten to provide some information. Try again...')
+      alert('You\'ve forgotten to provide some information. Try again...')
     }
   }
 
