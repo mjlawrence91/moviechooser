@@ -8,7 +8,7 @@ moviechooser
 * Now built using Custom Elements v1. Elements compiled to ES5 using [Babel](https://babeljs.io/) and bundled using [Rollup](https://rollupjs.org/).
 
 ### Backend
-* [MongoDB](https://www.mongodb.com/)
+* Data held in a [MongoDB](https://www.mongodb.com/) database hosted on a [DigitalOcean](https://www.digitalocean.com/) droplet.
 
 ### Credits
 * Double tap event handler function comes from [this StackOverflow answer](http://stackoverflow.com/a/32761323) user [Anulal S](http://stackoverflow.com/users/3951761/anulal-s).
