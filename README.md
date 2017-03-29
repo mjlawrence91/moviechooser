@@ -5,9 +5,7 @@ moviechooser
 ## Technology
 
 ### Frontend
-
-* [Bootstrap](http://getbootstrap.com) [Paper](https://bootswatch.com/paper/) template from [Bootswatch](https://bootswatch.com/)
-* [Babel](https://babeljs.io/), [Underscore](http://underscorejs.org)
+* Now built using Custom Elements v1. Elements compiled to ES5 using [Babel](https://babeljs.io/) and bundled using [Rollup](https://rollupjs.org/).
 
 ### Backend
 * [MongoDB](https://www.mongodb.com/)
