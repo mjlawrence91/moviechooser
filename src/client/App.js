@@ -116,6 +116,7 @@ class App {
 
     Object.keys(App.WHOS).forEach((who) => {
       const newFilter = document.createElement('button')
+      newFilter.type = 'button'
       newFilter.classList.add('ripple', 'filter-btn', 'btn-sm', 'js-filter')
       newFilter.style.backgroundColor = App.WHOS[who].primary
       newFilter.innerText = who
