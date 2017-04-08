@@ -24,7 +24,7 @@ self.addEventListener('fetch', event => {
   }
 
   // Else respond with fastest version
-  staleWhileRevaliate(event)
+  staleWhileRevalidate(event)
 })
 
 async function cacheStaticAssets () {
@@ -33,7 +33,7 @@ async function cacheStaticAssets () {
   return self.skipWaiting()
 }
 
-function staleWhileRevaliate (event) {
+function staleWhileRevalidate (event) {
   // Get version of file from network
   const fetchedVersion = fetch(event.request)
 
