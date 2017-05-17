@@ -1,5 +1,3 @@
-'use strict'
-
 export default class MovieListItem extends HTMLElement {
   static get observedAttributes () {
     return ['who']

@@ -1,10 +1,9 @@
-'use strict'
-
 import RippleHandler from './RippleHandler'
 
 class App {
   static get WHOS () {
     return {
+      'All': {primary: '#3F51B5'},
       'Alex': {primary: '#9C27B0'},
       'Charl': {primary: '#4CAF50'},
       'Matt': {primary: '#2196F3'},

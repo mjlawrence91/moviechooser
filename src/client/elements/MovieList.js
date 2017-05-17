@@ -1,5 +1,3 @@
-'use strict'
-
 import MovieRequest from '../MovieRequest'
 import './MovieListItem'
 
