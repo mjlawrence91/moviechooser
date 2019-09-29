@@ -3,12 +3,11 @@ import path from 'path'
 
 import config from 'config'
 import chalk from 'chalk'
-import pify from 'pify'
+import { promisify } from 'util'
 import spdy from 'spdy'
 
-import {connect} from './modules/DBConnection'
+import { connect } from './modules/DBConnection'
 import app from './app'
-
 ;(async function () {
   try {
     await connect()
@@ -18,12 +17,14 @@ import app from './app'
   }
 
   const port = config.get('server.port')
-  const isProduction = (process.env.NODE_ENV !== 'dev')
+  const isProduction = process.env.NODE_ENV !== 'dev'
 
   if (isProduction) {
-    app.listen(port, () => console.log(chalk.blue(`Server open on port ${port}`)))
+    app.listen(port, () =>
+      console.log(chalk.blue(`Server open on port ${port}`))
+    )
   } else {
-    const readFile = pify(fs.readFile)
+    const readFile = promisify(fs.readFile)
 
     const options = {
       key: await readFile(path.resolve(__dirname, '../../certs/key.pem')),

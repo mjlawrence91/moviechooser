@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import pify from 'pify'
+import { promisify } from 'util'
 import dot from 'dot'
 
 const staticPath = path.resolve(__dirname, '../../client')
-const readFile = pify(fs.readFile)
+const readFile = promisify(fs.readFile)
 
 async function injectInlineStyles (req, res) {
   // Read inline styles
@@ -17,7 +17,7 @@ async function injectInlineStyles (req, res) {
 
   // Inject inline styles into index.html and serve
   const template = dot.template(html)
-  const injectedHtml = template({styles})
+  const injectedHtml = template({ styles })
   res.send(injectedHtml)
 }
 
