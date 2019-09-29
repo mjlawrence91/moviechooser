@@ -1,3 +1,4 @@
+import './elements/MovieListItem.js'
 import './elements/MovieList.js'
 import RippleHandler from './utils/RippleHandler.js'
 

@@ -1,4 +1,5 @@
 import { elementID, elementHTML } from './movie-list-item.html.js'
+import { parseTemplate } from '../utils/parseHTMLTemplate.js'
 
 export default class MovieListItem extends HTMLElement {
   static get observedAttributes () {
@@ -39,13 +40,7 @@ export default class MovieListItem extends HTMLElement {
 
   _createShadowRoot () {
     this._root = this.attachShadow({ mode: 'open' })
-    this._root.innerHTML = this._parseTemplate(elementHTML, elementID)
-  }
-
-  _parseTemplate (template, selector) {
-    const domParser = new DOMParser()
-    const parsedTemplate = domParser.parseFromString(template, 'text/html')
-    return parsedTemplate.querySelector(selector).innerHTML
+    this._root.innerHTML = parseTemplate(elementHTML, elementID)
   }
 
   set id (_id) {

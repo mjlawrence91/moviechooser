@@ -37,23 +37,23 @@ export default class RippleHandler {
   }
 
   onClick (evt, proxy) {
-    const {offsetX, offsetY} = evt
+    const { offsetX, offsetY } = evt
 
     requestAnimationFrame(_ => {
-      // Get element position
-      const {clientWidth, clientHeight, elem} = proxy
+      // Get element position.
+      const { clientWidth, clientHeight, elem } = proxy
 
-      // Create ripple element
+      // Create ripple element.
       const ripple = document.createElement('div')
       elem.appendChild(ripple)
 
       ripple.classList.add('ripple-effect')
       ripple.style.width = `${clientWidth}px`
       ripple.style.height = `${clientHeight}px`
-      ripple.style.left = `${offsetX - (clientWidth / 2)}px`
-      ripple.style.top = `${offsetY - (clientHeight / 2)}px`
+      ripple.style.left = `${offsetX - clientWidth / 2}px`
+      ripple.style.top = `${offsetY - clientHeight / 2}px`
 
-      // Remove ripple element after animation
+      // Remove ripple element after animation.
       ripple.addEventListener('animationend', _ => {
         requestAnimationFrame(_ => ripple.remove())
       })

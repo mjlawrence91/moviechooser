@@ -1,6 +1,6 @@
-import MovieRequest from '../utils/MovieRequest.js'
 import { elementHTML, elementID } from './movie-list.html.js'
-import './MovieListItem.js'
+import MovieRequest from '../utils/MovieRequest.js'
+import { parseTemplate } from '../utils/parseHTMLTemplate.js'
 
 class MovieList extends HTMLElement {
   static get observedAttributes () {
@@ -10,7 +10,6 @@ class MovieList extends HTMLElement {
   constructor () {
     super()
 
-    this._root = null
     this._tmpl = null
     this._url = ''
     this._request = null
@@ -39,8 +38,8 @@ class MovieList extends HTMLElement {
   }
 
   connectedCallback () {
-    this._root = this.attachShadow({ mode: 'open' })
-    this._root.innerHTML = this._parseTemplate(elementHTML, elementID)
+    const parsedHTML = parseTemplate(elementHTML, elementID)
+    this.innerHTML = parsedHTML + this.innerHTML
 
     this._url = this.getAttribute('url')
     this._request = new MovieRequest(this.url)
@@ -52,12 +51,6 @@ class MovieList extends HTMLElement {
         document.querySelector('.preload').remove('active')
       })
       .catch(error => console.error(error))
-  }
-
-  _parseTemplate (template, selector) {
-    const domParser = new DOMParser()
-    const parsedTemplate = domParser.parseFromString(template, 'text/html')
-    return parsedTemplate.querySelector(selector).innerHTML
   }
 
   attributeChangedCallback (name, oldValue, newValue) {
