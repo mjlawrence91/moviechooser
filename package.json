@@ -2,21 +2,18 @@
   "name": "movie-chooser",
   "version": "2.0.0",
   "scripts": {
-    "preinstall": "bower install",
-    "build": "npm run clean -s && npm run make-dist -s && npm run make-client -s && npm run make-styles -s && npm run make-lib -s && npm run copy-all && npm run build-css && npm run build-js",
+    "build": "npm run clean -s && npm run make-dist -s && npm run make-client -s && npm run make-styles -s && npm run copy-all && npm run build-css && npm run build-js",
     "start": "NODE_CONFIG_DIR=dist/config node dist/index.js",
-    "dev": "npm run build && parallelshell \"npm run watch\" \"npm run serve\"",
-    "serve": "NODE_ENV=dev NODE_CONFIG_DIR=dist/config nodemon -q -e js,json dist/index.js",
+    "dev": "npm run build && npm run serve",
+    "serve": "NODE_ENV=dev NODE_CONFIG_DIR=dist/config nodemon -q -e js,json -w dist dist/index.js",
     "watch": "npm-watch",
     "clean": "rm -rf dist",
     "make-dist": "mkdir -p dist",
     "make-client": "mkdir -p dist/client",
     "make-styles": "mkdir -p dist/client/styles",
-    "make-lib": "mkdir -p dist/client/lib",
-    "copy-all": "npm run copy-index -s && npm run copy-server && npm run copy-config -s && npm run copy-client && npm run copy-lib",
-    "copy-client": "copy \"src/client/**/*.*\" \"!src/client/styles/**/*.*\" dist/client",
-    "copy-config": "cp -R src/config dist",
-    "copy-lib": "cp -R bower_components/webcomponentsjs/webcomponents-*.js bower_components/webcomponentsjs/custom-elements-es5-adapter.js dist/client/lib",
+    "copy-all": "npm run copy-index -s && npm run copy-server && npm run copy-config -s && npm run copy-client",
+    "copy-client": "copy \"src/client/**/*.*\" \"!src/client/**/*.js\" \"!src/client/styles/**/*.*\" dist/client",
+    "copy-config": "cp -R config dist",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
     "build-css": "babel-node build/minifyStyles.js",
@@ -40,8 +37,6 @@
   },
   "devDependencies": {
     "babel-eslint": "6.0.2",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babili": "0.0.12",
     "clean-css": "^4.0.9",
     "copy": "^0.3.0",
     "dot": "^1.1.1",
@@ -53,7 +48,7 @@
     "npm-watch": "^0.1.8",
     "parallelshell": "^2.0.0",
     "rollup": "^0.41.5",
-    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-terser": "^5.1.2",
     "spdy": "^3.4.4"
   },
   "dependencies": {
@@ -66,9 +61,8 @@
     "compression": "^1.6.2",
     "config": "^1.21.0",
     "cors": "^2.8.1",
-    "express": "4.14.0",
+    "express": "^4.17.1",
     "helmet": "^3.5.0",
-    "mongodb": "^2.2.6",
-    "pify": "^2.3.0"
+    "mongodb": "^2.2.6"
   }
 }
