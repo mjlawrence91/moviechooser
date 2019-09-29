@@ -1,6 +1,11 @@
 {
   "name": "movie-chooser",
-  "version": "2.0.0",
+  "version": "2.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjlawrence91/moviechooser.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "npm run clean -s && npm run make-dist -s && npm run make-client -s && npm run make-styles -s && npm run copy-all && npm run build-css && npm run build-js",
     "start": "NODE_CONFIG_DIR=dist/config node dist/index.js",
@@ -40,14 +45,16 @@
     "clean-css": "^4.0.9",
     "copy": "^0.3.0",
     "dot": "^1.1.1",
-    "eslint": "2.9.0",
-    "eslint-config-standard": "^5.3.1",
-    "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-standard": "^1.3.2",
+    "eslint": "^6.5.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^1.10.0",
     "npm-watch": "^0.1.8",
     "parallelshell": "^2.0.0",
-    "rollup": "^0.41.5",
+    "rollup": "^1.22.0",
     "rollup-plugin-terser": "^5.1.2",
     "spdy": "^3.4.4"
   },
