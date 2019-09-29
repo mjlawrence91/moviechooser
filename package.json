@@ -11,7 +11,6 @@
     "start": "NODE_CONFIG_DIR=dist/config node dist/index.js",
     "dev": "npm run build && npm run serve",
     "serve": "NODE_ENV=dev NODE_CONFIG_DIR=dist/config nodemon -q -e js,json -w dist dist/index.js",
-    "watch": "npm-watch",
     "clean": "rm -rf dist",
     "make-dist": "mkdir -p dist",
     "make-client": "mkdir -p dist/client",
@@ -23,22 +22,6 @@
     "copy-index": "cp -R index.js dist",
     "build-css": "babel-node build/minifyStyles.js",
     "build-js": "babel-node build/transpiler.js"
-  },
-  "watch": {
-    "build-css": {
-      "patterns": "src/client/styles",
-      "extensions": [
-        "css"
-      ]
-    },
-    "build-js": {
-      "patterns": "src/client",
-      "extensions": [
-        "js"
-      ]
-    },
-    "copy-client": "src/client",
-    "copy-server": "src/server"
   },
   "devDependencies": {
     "babel-eslint": "6.0.2",
@@ -52,8 +35,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^1.10.0",
-    "npm-watch": "^0.1.8",
-    "parallelshell": "^2.0.0",
     "rollup": "^1.22.0",
     "rollup-plugin-terser": "^5.1.2",
     "spdy": "^3.4.4"
