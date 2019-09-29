@@ -2,11 +2,11 @@
 
 const fs = require('fs')
 const path = require('path')
-const pify = require('pify')
+const { promisify } = require('util')
 const CleanCSS = require('clean-css')
 
-const readFile = pify(fs.readFile)
-const writeFile = pify(fs.writeFile)
+const readFile = promisify(fs.readFile)
+const writeFile = promisify(fs.writeFile)
 
 const inPath = path.join(__dirname, '..', 'src', 'client', 'styles')
 const outPath = path.join(__dirname, '..', 'dist')
