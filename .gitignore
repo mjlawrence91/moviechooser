@@ -14,5 +14,6 @@ certs
 config
 dist
 node_modules
+pocs
 ROADMAP.md
 ecosystem.json
