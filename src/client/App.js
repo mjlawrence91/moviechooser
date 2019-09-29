@@ -1,13 +1,14 @@
-import RippleHandler from './RippleHandler'
+import './elements/MovieList.js'
+import RippleHandler from './utils/RippleHandler.js'
 
 class App {
   static get WHOS () {
     return {
-      'All': {primary: '#3F51B5'},
-      'Alex': {primary: '#9C27B0'},
-      'Charl': {primary: '#4CAF50'},
-      'Matt': {primary: '#2196F3'},
-      'Rob': {primary: '#F44336'}
+      All: { primary: '#3F51B5' },
+      Alex: { primary: '#9C27B0' },
+      Charl: { primary: '#4CAF50' },
+      Matt: { primary: '#2196F3' },
+      Rob: { primary: '#F44336' }
     }
   }
 
@@ -15,78 +16,38 @@ class App {
     return 13
   }
 
-  static get POLYFILLS () {
-    return {
-      wcLoader: 'lib/webcomponents-loader.js',
-      ceAdapter: 'lib/custom-elements-es5-adapter.js'
-    }
-  }
-
-  get customElementsSupported () {
-    return !!window.customElements
-  }
-
-  get shadowDOMSupported () {
-    return !!HTMLElement.prototype.attachShadow
-  }
-
-  get htmlImportsSupported () {
-    return ('import' in document.createElement('link'))
-  }
-
-  constructor (window) {
+  constructor () {
     this._rippleHandler = new RippleHandler()
 
-    // Needed for mobile doubletap handler
+    // Needed for mobile doubletap handler.
     this._tappedTwice = false
 
-    // Ensures all methods are accessible throughout the class
+    // Ensures all methods are accessible throughout the class.
     this._createBindings()
   }
 
-  bootstrap () {
-    // Register service worker
+  _registerServiceWorker () {
     if ('serviceWorker' in navigator) {
-    // navigator.serviceWorker.register('./sw.js', {scope: '/'})
+      // navigator.serviceWorker.register('./sw.js', {scope: '/'})
     }
-
-    // Load webcomponents polyfills and HTML imports
-    return new Promise((resolve, reject) => {
-      // Load polyfills
-      Promise.all([
-        this._lazyLoadScript(App.POLYFILLS.ceAdapter),
-        this._lazyLoadScript(App.POLYFILLS.wcLoader)
-      ]).then(result => {
-        // Load HTML imports
-        return Promise.all([
-          this._lazyLoadImport('elements/movie-list.html'),
-          this._lazyLoadImport('elements/movie-list-item.html')
-        ])
-      }).then(result => resolve(result))
-        .catch(error => reject(`Error occurred loading polyfills: ${error}`))
-    })
   }
 
   init () {
-    this.bootstrap().then(_ => {
-      console.info('Custom Elements supported', this.customElementsSupported)
-      console.info('Shadow DOM supported', this.shadowDOMSupported)
-      console.info('HTML Imports supported', this.htmlImportsSupported)
+    this._registerServiceWorker()
 
-      // Load filters for who suggested a movie
-      this.renderWhosFilters()
+    // Load filters for who suggested a movie.
+    this.renderWhosFilters()
 
-      // Enables button ripples
-      this._rippleHandler.init()
+    // Enables button ripples.
+    this._rippleHandler.init()
 
-      // Load event handlers
-      this._addHandlers()
-    }).catch(error => console.error(error))
+    // Load event handlers.
+    this._addHandlers()
 
-    // Load stored title if one present
+    // Load stored title if one present.
     this.renderTitle()
 
-    // Load select options for who suggested a movie
+    // Load select options for who suggested a movie.
     this.renderWhos()
   }
 
@@ -113,7 +74,7 @@ class App {
     const filtersContainer = document.querySelector('.filter-group')
     const fragment = document.createDocumentFragment()
 
-    Object.keys(App.WHOS).forEach((who) => {
+    Object.keys(App.WHOS).forEach(who => {
       const newFilter = document.createElement('button')
       newFilter.type = 'button'
       newFilter.classList.add('ripple', 'filter-btn', 'btn-sm', 'js-filter')
@@ -127,13 +88,16 @@ class App {
   }
 
   savetoStore (newMovie) {
-    // Add movie to list
+    // Add movie to list.
     const movieList = document.querySelector('movie-list')
-    movieList.addMovie(newMovie).then(_ => {
-      // Clear form and re-focus name field for new entry
-      this._clearFormValues()
-      document.querySelector('input[name=movie]').focus()
-    }).catch(error => console.error(error))
+    movieList
+      .addMovie(newMovie)
+      .then(_ => {
+        // Clear form and re-focus name field for new entry.
+        this._clearFormValues()
+        document.querySelector('input[name=movie]').focus()
+      })
+      .catch(error => console.error(error))
   }
 
   addMovie (evt) {
@@ -143,12 +107,12 @@ class App {
     const who = document.querySelector('[name=who]').value
 
     if (movieName && who) {
-      const newMovie = {name: movieName, who}
+      const newMovie = { name: movieName, who }
       this.savetoStore(newMovie)
     } else {
       // [TODO] Display this to the screen.
-      console.warn('You\'ve forgotten to provide some information. Try again...')
-      alert('You\'ve forgotten to provide some information. Try again...')
+      console.warn("You've forgotten to provide some information. Try again...")
+      alert("You've forgotten to provide some information. Try again...")
     }
   }
 
@@ -165,35 +129,13 @@ class App {
 
       const delayRender = _ => {
         const activeFilter = document.querySelector('.js-filter.active')
-        const filterText = (activeFilter) ? activeFilter.textContent : ''
+        const filterText = activeFilter ? activeFilter.textContent : ''
 
         movieList.chooseRandom(filterText)
         movieList.hideSpinner()
       }
 
       setTimeout(delayRender, 3000)
-    })
-  }
-
-  _lazyLoadScript (src) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = src
-      script.onload = resolve
-      script.onerror = reject
-      document.head.appendChild(script)
-    })
-  }
-
-  _lazyLoadImport (href) {
-    return new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'import'
-      link.async = true
-      link.href = href
-      link.onload = resolve
-      link.onerror = error => reject(`Error occurred loading HTML imports: ${error}`)
-      document.head.appendChild(link)
     })
   }
 
@@ -214,34 +156,38 @@ class App {
   _addHandlers () {
     const title = document.querySelector('.header__title')
 
-    // Add handler for Choose button
-    document.querySelector('#choose').addEventListener('click', this.chooseRandom)
+    // Add handler for Choose button.
+    document
+      .querySelector('#choose')
+      .addEventListener('click', this.chooseRandom)
 
-    // Add handler to submit form
+    // Add handler to submit form.
     document.querySelector('form').addEventListener('submit', this.addMovie)
 
-    // Add handler for editing title
+    // Add handler for editing title.
     title.addEventListener('dblclick', evt => {
       // Make title editable and select all text
       evt.target.setAttribute('contenteditable', 'true')
       evt.target.focus()
       this._selectText(evt.target)
 
-      // Add handlers for Enter key to save title
+      // Add handlers for Enter key to save title.
       document.addEventListener('keypress', this._saveTitleOnEnter)
 
-      // Add handler to save title when you click/tap off title
+      // Add handler to save title when you click/tap off title.
       title.addEventListener('blur', this._saveTitleOnBlur)
     })
 
-    // Add doubletap handler for mobile
+    // Add doubletap handler for mobile.
     document.addEventListener('touchstart', this._doubleTapHandler)
   }
 
   _doubleTapHandler (evt) {
     if (!this._tappedTwice) {
       this._tappedTwice = true
-      setTimeout(_ => { this._tappedTwice = false }, 300)
+      setTimeout(_ => {
+        this._tappedTwice = false
+      }, 300)
       return false
     }
 
@@ -275,9 +221,11 @@ class App {
 
     evt.target.removeAttribute('contenteditable')
 
-    // Remove save title handlers
+    // Remove save title handlers.
     document.removeEventListener('keypress', this._saveTitleOnEnter)
-    document.querySelector('.header__title').removeEventListener('blur', this._saveTitleOnBlur)
+    document
+      .querySelector('.header__title')
+      .removeEventListener('blur', this._saveTitleOnBlur)
   }
 
   _clearFormValues () {
@@ -306,7 +254,9 @@ class App {
       return
     }
 
-    const unselected = Array.from(document.querySelectorAll('.js-filter.active'))
+    const unselected = Array.from(
+      document.querySelectorAll('.js-filter.active')
+    )
     unselected.forEach(uns => uns.classList.remove('active'))
     evt.target.classList.add('active')
   }

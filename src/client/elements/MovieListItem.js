@@ -1,3 +1,5 @@
+import { elementID, elementHTML } from './movie-list-item.html.js'
+
 export default class MovieListItem extends HTMLElement {
   static get observedAttributes () {
     return ['who']
@@ -36,11 +38,14 @@ export default class MovieListItem extends HTMLElement {
   }
 
   _createShadowRoot () {
-    const link = document.querySelector('link[rel=import][href*="movie-list-item"]')
-    this._tmpl = link.import.querySelector('#movie-list-item-tmpl')
+    this._root = this.attachShadow({ mode: 'open' })
+    this._root.innerHTML = this._parseTemplate(elementHTML, elementID)
+  }
 
-    this._root = this.attachShadow({mode: 'open'})
-    this._root.appendChild(this._tmpl.content.cloneNode(true))
+  _parseTemplate (template, selector) {
+    const domParser = new DOMParser()
+    const parsedTemplate = domParser.parseFromString(template, 'text/html')
+    return parsedTemplate.querySelector(selector).innerHTML
   }
 
   set id (_id) {
@@ -76,11 +81,13 @@ export default class MovieListItem extends HTMLElement {
     const removeLink = this._root.querySelector('.remove')
     const movieToDelete = removeLink.getAttribute('remove')
 
-    const {request, url: basePath} = this.parentElement
+    const { request, url: basePath } = this.parentElement
     request.path = `${basePath}/${movieToDelete}`
 
-    request.delete().then(_ => this.remove())
-      .catch(_ => this._errorHandler('This movie doesn\'t exist. Oops.'))
+    request
+      .delete()
+      .then(_ => this.remove())
+      .catch(_ => this._errorHandler("This movie doesn't exist. Oops."))
   }
 
   _errorHandler (message) {

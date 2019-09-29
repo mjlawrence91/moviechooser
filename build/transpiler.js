@@ -1,37 +1,24 @@
-'use strict'
-
 const { rollup } = require('rollup')
-const babel = require('rollup-plugin-babel')
-
-const entries = [
-  'client/App.js',
-  'client/elements/MovieList.js'
-]
+const { terser } = require('rollup-plugin-terser')
 
 let cache
-
-entries.forEach(async entry => {
+;(async () => {
   try {
     const bundle = await rollup({
-      entry: `src/${entry}`,
+      entry: 'src/client/App.js',
       cache,
-      plugins: [
-        babel({
-          babelrc: false,
-          presets: ['es2015-rollup', 'babili']
-        })
-      ]
+      plugins: [terser()]
     })
 
     cache = bundle
 
-    bundle.write({
+    await bundle.write({
       format: 'iife',
       moduleName: 'App',
       sourceMap: 'inline',
-      dest: `dist/${entry}`
+      dest: 'dist/client/App.js'
     })
   } catch (e) {
     console.error(e)
   }
-})
+})()

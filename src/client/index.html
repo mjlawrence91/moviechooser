@@ -2,17 +2,30 @@
 <html>
   <head>
     <title>Movie Chooser</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Movie Chooser">
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Movie Chooser" />
+    <link rel="manifest" href="manifest.json" />
 
-    <style>{{=it.styles}}</style>
+    <style>
+      {{=it.styles}}
+    </style>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="styles/styles.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
 
+    <!-- <script src="elements/movie-list-item.html.js" type="module"></script>
+    <script src="elements/MovieListItem.js" type="module"></script>
+    <script src="elements/movie-list.html.js" type="module"></script>
+    <script src="elements/MovieList.js" type="module"></script>
+    <script src="utils/MovieRequest.js" type="module"></script> -->
     <script defer src="App.js"></script>
   </head>
   <body>
@@ -26,7 +39,7 @@
           <form novalidate>
             <fieldset>
               <div class="form-group">
-                <input type="text" class="form-control" name="movie" required>
+                <input type="text" class="form-control" name="movie" required />
                 <span class="bar"></span>
                 <label for="movie" class="control-label">Movie Name</label>
               </div>
