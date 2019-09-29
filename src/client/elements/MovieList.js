@@ -91,10 +91,7 @@ class MovieList extends HTMLElement {
     const randomMovie = filteredMovies[rand]
 
     if (randomMovie) {
-      // Fix for Safari: have to access through shadow root. Because Safari.
-      const movieText = randomMovie._root.querySelector('.movie-name')
-        .textContent
-      movieDisplay.textContent = movieText || 'No movies.'
+      movieDisplay.textContent = randomMovie.name || 'No movies.'
     } else {
       movieDisplay.textContent = 'No movies.'
     }
