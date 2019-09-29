@@ -5,7 +5,7 @@ let cache
 ;(async () => {
   try {
     const bundle = await rollup({
-      entry: 'src/client/App.js',
+      input: 'src/client/App.js',
       cache,
       plugins: [terser()]
     })
@@ -14,9 +14,9 @@ let cache
 
     await bundle.write({
       format: 'iife',
-      moduleName: 'App',
-      sourceMap: 'inline',
-      dest: 'dist/client/App.js'
+      name: 'App',
+      sourcemap: 'inline',
+      file: 'dist/client/App.js'
     })
   } catch (e) {
     console.error(e)
