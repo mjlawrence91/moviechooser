@@ -16,7 +16,7 @@
     "make-client": "mkdir -p dist/client",
     "make-styles": "mkdir -p dist/client/styles",
     "copy-all": "npm run copy-index -s && npm run copy-server && npm run copy-config -s && npm run copy-client",
-    "copy-client": "copy \"src/client/**/*.*\" \"!src/client/**/*.js\" \"!src/client/styles/**/*.*\" dist/client",
+    "copy-client": "copy \"src/client/**/*.*\" \"!src/client/elements/*.js\" \"!src/client/utils/*.js\" \"!src/client/styles/**/*.*\" dist/client",
     "copy-config": "cp -R config dist",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
