@@ -10,7 +10,7 @@
 
 ### Backend
 
-- Data held in a [MongoDB](https://www.mongodb.com/) database hosted on a [DigitalOcean](https://www.digitalocean.com/) droplet.
+- Application hosted on a [DigitalOcean](https://www.digitalocean.com/) droplet. Data held in [Firebase](https://firebase.google.com/).
 
 ### Credits
 
