@@ -7,7 +7,6 @@ import cors from 'cors'
 
 import errorHandler from './middleware/errorHandler'
 import routes from './routes'
-import whos from './routes/whos'
 import injectInlineStyles from './routes/injectInlineStyles'
 import loadServiceWorker from './routes/loadServiceWorker'
 
@@ -32,9 +31,6 @@ app.use('/static', express.static(staticPath))
 
 // Serve Service Worker script.
 app.get('/sw.js', loadServiceWorker)
-
-// Whos routes.
-app.get('/api/whos/:id?', whos.read)
 
 // Movie routes.
 app.get('/api/movies/:id?', routes.read)
