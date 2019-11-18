@@ -6,11 +6,13 @@ const ASSETS = [
   './static/manifest.json',
   './static/robots.txt',
   './static/spinner.png',
-  './static/styles/styles.css',
+  './static/styles/styles.css'
 ]
 
 self.addEventListener('install', _ => cacheStaticAssets())
+
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()))
+
 self.addEventListener('fetch', event => {
   const parsedURL = new URL(event.request.url)
 
@@ -57,7 +59,7 @@ function staleWhileRevalidate (event) {
       return response
     } catch (_) {
       // If not there, respond with not found status.
-      return new Response(null, {status: 404})
+      return new Response(null, { status: 404 })
     }
   }
 

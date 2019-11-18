@@ -36,8 +36,6 @@ class App {
   }
 
   init () {
-    this._registerServiceWorker()
-
     // Load filters for who suggested a movie.
     this.renderWhosFilters()
 
