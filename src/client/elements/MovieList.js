@@ -62,10 +62,11 @@ class MovieList extends HTMLElement {
   _loadMovies (movies) {
     const fragment = document.createDocumentFragment()
 
-    movies.forEach(movie => {
+    for (const movieKey in movies) {
+      const movie = movies[movieKey]
       const listItem = this._createMovieItem(movie)
       fragment.appendChild(listItem)
-    })
+    }
 
     this.appendChild(fragment)
   }

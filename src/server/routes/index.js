@@ -1,11 +1,10 @@
-import {ObjectId} from 'mongodb'
-import {db} from '../modules/DBConnection'
+import db from '../modules/DBConnection'
 
 export default {
   async read (req, res) {
-    const collection = db.collection('movies')
-    const query = (req.params.id) ? {_id: ObjectId(req.params.id)} : {}
-    const movies = await collection.find(query).toArray()
+    const movies = await db.ref('/').once('value')
+      .then(snapshot => snapshot.val())
+
     res.status(200).send(movies)
   },
 
@@ -13,23 +12,24 @@ export default {
     const body = (Object.keys(req.body).length) ? req.body : null
 
     if (body) {
-      const collection = db.collection('movies')
-      const movie = await collection.insert(req.body)
-      const [inserted] = movie.ops
+      const newKey = db.ref().push().key
+      const inserted = { _id: newKey, ...body }
+      await db.ref('/').update({ ['/' + newKey]: inserted })
+
       res.status(201).json(inserted)
     } else {
-      res.status(400).json({message: 'No body sent.'})
+      res.status(400).json({ message: 'No body sent.' })
     }
   },
 
   async delete (req, res) {
-    const collection = db.collection('movies')
+    const keyToDelete = req.params.id
 
     try {
-      await collection.deleteOne({_id: ObjectId(req.params.id)})
-      res.status(200).json({deleted: req.params.id})
+      await db.ref(`/${keyToDelete}`).remove()
+      res.status(200).json({ deleted: keyToDelete })
     } catch (error) {
-      res.status(400).json({message: error.toString()})
+      res.status(400).json({ message: error.toString() })
     }
   }
 }

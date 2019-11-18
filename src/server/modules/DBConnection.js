@@ -1,18 +1,8 @@
-import {db} from 'config'
-import {MongoClient} from 'mongodb'
+import config from 'config'
+import * as firebase from 'firebase/app'
+import 'firebase/database'
 
-let _instance = null
+const firebaseConfig = config.get('firebase')
+firebase.initializeApp(firebaseConfig)
 
-function _resolveURL () {
-  const creds = (db.username && db.password) ? `${db.username}:${db.password}@` : ''
-  return `mongodb://${creds}${db.host}:${db.port}/${db.name}`
-}
-
-const connect = async _ => {
-  if (!_instance) {
-    const url = _resolveURL()
-    _instance = await MongoClient.connect(url)
-  }
-}
-
-export { _instance as db, connect }
+export default firebase.database()

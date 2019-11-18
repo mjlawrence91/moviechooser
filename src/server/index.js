@@ -6,16 +6,9 @@ import chalk from 'chalk'
 import { promisify } from 'util'
 import spdy from 'spdy'
 
-import { connect } from './modules/DBConnection'
 import app from './app'
-;(async function () {
-  try {
-    await connect()
-  } catch (error) {
-    console.error(chalk.red(error))
-    return
-  }
 
+; (async function () {
   const port = config.get('server.port')
   const isProduction = process.env.NODE_ENV !== 'dev'
 
