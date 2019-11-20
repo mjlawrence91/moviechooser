@@ -20,8 +20,8 @@
     "copy-config": "cp -R config dist",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
-    "build-css": "babel-node build/minifyStyles.js",
-    "build-js": "babel-node build/transpiler.js"
+    "build-css": "node build/minifyStyles.js",
+    "build-js": "node build/transpiler.js"
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
