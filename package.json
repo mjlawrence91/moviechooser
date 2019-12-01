@@ -27,7 +27,6 @@
     "babel-eslint": "10.0.3",
     "clean-css": "^4.0.9",
     "copy": "^0.3.0",
-    "dot": "^1.1.1",
     "eslint": "^6.6.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
