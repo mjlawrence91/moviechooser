@@ -11,7 +11,9 @@ const ASSETS = [
 
 self.addEventListener('install', _ => cacheStaticAssets())
 
-self.addEventListener('activate', event => event.waitUntil(self.clients.claim()))
+self.addEventListener('activate', event =>
+  event.waitUntil(self.clients.claim())
+)
 
 self.addEventListener('fetch', event => {
   const parsedURL = new URL(event.request.url)

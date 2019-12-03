@@ -110,13 +110,12 @@ class MovieList extends HTMLElement {
         const newItem = this._createMovieItem(newMovie)
         this.appendChild(newItem)
       })
-    } else {
-      // [TODO] Display this to the screen.
-      console.warn(
-        `${formValues.who} has already suggested ${formValues.name}. Had you forgotten?`
-      )
-      return Promise.resolve()
     }
+    // [TODO] Display this to the screen.
+    console.warn(
+      `${formValues.who} has already suggested ${formValues.name}. Had you forgotten?`
+    )
+    return Promise.resolve()
   }
 
   showSpinner () {

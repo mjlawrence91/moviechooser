@@ -1,5 +1,3 @@
-'use strict'
-
 export default class RippleHandler {
   constructor () {
     this._selector = 'button.ripple'
@@ -7,15 +5,13 @@ export default class RippleHandler {
 
   init () {
     this._els = document.querySelectorAll(this._selector)
-    this._elementProxies = Array.from(this._els).map(el => {
-      return {
-        elem: el,
-        clientWidth: el.clientWidth,
-        offsetWidth: el.offsetWidth,
-        clientHeight: el.clientHeight,
-        offsetHeight: el.offsetHeight
-      }
-    })
+    this._elementProxies = Array.from(this._els).map(el => ({
+      elem: el,
+      clientWidth: el.clientWidth,
+      offsetWidth: el.offsetWidth,
+      clientHeight: el.clientHeight,
+      offsetHeight: el.offsetHeight
+    }))
 
     Array.from(this._els).forEach(el => {
       const proxy = this._elementProxies.find(proxy => proxy.elem === el)

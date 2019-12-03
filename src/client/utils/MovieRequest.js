@@ -1,5 +1,3 @@
-'use strict'
-
 export default class MovieRequest {
   constructor (path) {
     if (!path) {
@@ -36,7 +34,7 @@ export default class MovieRequest {
       }
 
       this._handleError = (reject, status, statusText) => {
-        reject({status, statusText})
+        reject({ status, statusText })
       }
 
       this._xhr.onload = this._handleResponse

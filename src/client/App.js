@@ -29,9 +29,12 @@ class App {
 
   _registerServiceWorker () {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
+      navigator.serviceWorker
+        .register('./sw.js')
         .then(() => console.log('Service worker connected.'))
-        .catch(error => console.error(`Service worker registration failed: ${error}`))
+        .catch(error =>
+          console.error(`Service worker registration failed: ${error}`)
+        )
     }
   }
 

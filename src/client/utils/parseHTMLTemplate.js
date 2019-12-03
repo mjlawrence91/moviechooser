@@ -15,7 +15,6 @@ export const parseTemplate = (template, selector) => {
 
   if (element) {
     return element.innerHTML
-  } else {
-    console.error('No template found that matches the provided ID.')
   }
+  console.error('No template found that matches the provided ID.')
 }

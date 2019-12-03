@@ -4,12 +4,7 @@ module.exports = {
     es6: true,
     node: true
   },
-  globals: {
-    _: true
-  },
-  parser: 'babel-eslint',
-  extends: 'standard',
-  rules: {
-    'arrow-parens': 0
-  }
-}
+  parser: "babel-eslint",
+  extends: ["standard"],
+  rules: {}
+};
