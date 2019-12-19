@@ -20,12 +20,11 @@
     "copy-config": "cp -R config dist",
     "copy-server": "cp -R src/server dist",
     "copy-index": "cp -R index.js dist",
-    "build-css": "babel-node build/minifyStyles.js",
-    "build-js": "babel-node build/transpiler.js"
+    "build-css": "node build/minifyStyles.js",
+    "build-js": "node build/transpiler.js"
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
-    "clean-css": "^4.0.9",
     "copy": "^0.3.0",
     "eslint": "^6.6.0",
     "eslint-config-standard": "^14.1.0",
@@ -34,23 +33,26 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^1.10.0",
+    "prettier": "^1.19.1",
+    "prettier-eslint": "^9.0.1",
     "rollup": "^1.22.0",
-    "rollup-plugin-terser": "^5.1.2",
-    "spdy": "^3.4.4"
+    "rollup-plugin-terser": "^5.1.2"
   },
   "dependencies": {
-    "babel-polyfill": "^6.13.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-node5": "^11.1.0",
-    "babel-register": "^6.11.6",
+    "@babel/core": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
     "body-parser": "^1.15.2",
     "chalk": "^1.1.3",
+    "clean-css": "^4.0.9",
     "compression": "^1.6.2",
     "config": "^1.21.0",
     "cors": "^2.8.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "firebase": "^7.4.0",
-    "helmet": "^3.5.0"
+    "helmet": "^3.5.0",
+    "spdy": "^3.4.4"
   }
 }

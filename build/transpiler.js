@@ -1,8 +1,9 @@
 const { rollup } = require('rollup')
 const { terser } = require('rollup-plugin-terser')
 
-let cache
-;(async () => {
+let cache;
+
+(async () => {
   try {
     const bundle = await rollup({
       input: 'src/client/App.js',
