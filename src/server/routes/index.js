@@ -2,19 +2,21 @@ import db from '../modules/DBConnection'
 
 export default {
   async read (req, res) {
-    const movies = await db.ref('/').once('value')
+    const movies = await db
+      .ref('/')
+      .once('value')
       .then(snapshot => snapshot.val())
 
     res.status(200).send(movies)
   },
 
   async create (req, res) {
-    const body = (Object.keys(req.body).length) ? req.body : null
+    const body = Object.keys(req.body).length ? req.body : null
 
     if (body) {
       const newKey = db.ref().push().key
       const inserted = { _id: newKey, ...body }
-      await db.ref('/').update({ ['/' + newKey]: inserted })
+      await db.ref('/').update({ [`/${newKey}`]: inserted })
 
       res.status(201).json(inserted)
     } else {

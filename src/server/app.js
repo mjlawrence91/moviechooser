@@ -10,7 +10,7 @@ import routes from './routes'
 import injectInlineStyles from './routes/injectInlineStyles'
 import loadServiceWorker from './routes/loadServiceWorker'
 
-const isProduction = (process.env.NODE_ENV !== 'dev')
+const isProduction = process.env.NODE_ENV !== 'dev'
 const staticPath = path.resolve(__dirname, '../client')
 
 const app = express()

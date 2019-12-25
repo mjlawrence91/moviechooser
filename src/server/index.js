@@ -1,14 +1,13 @@
+import https from 'https'
 import fs from 'fs'
 import path from 'path'
 
 import config from 'config'
 import chalk from 'chalk'
 import { promisify } from 'util'
-import spdy from 'spdy'
 
 import app from './app'
-
-; (async function () {
+;(async function () {
   const port = config.get('server.port')
   const isProduction = process.env.NODE_ENV !== 'dev'
 
@@ -24,7 +23,7 @@ import app from './app'
       cert: await readFile(path.resolve(__dirname, '../../certs/cert.pem'))
     }
 
-    spdy.createServer(options, app).listen(port, _ => {
+    https.createServer(options, app).listen(port, () => {
       console.log(chalk.blue(`Server open on port ${port}`))
     })
   }
