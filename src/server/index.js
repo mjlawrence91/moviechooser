@@ -2,14 +2,14 @@ import https from 'https'
 import fs from 'fs'
 import path from 'path'
 
-import config from 'config'
 import chalk from 'chalk'
 import { promisify } from 'util'
 
+import config from './utils/config'
 import app from './app'
 ;(async function () {
-  const port = config.get('server.port')
-  const isProduction = process.env.NODE_ENV !== 'dev'
+  const port = config.get('SERVER_PORT')
+  const isProduction = config.get('NODE_ENV') !== 'dev'
 
   if (isProduction) {
     app.listen(port, () =>

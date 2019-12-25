@@ -9,9 +9,9 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -cw",
-    "start": "NODE_CONFIG_DIR=dist/config node dist/index.js",
+    "start": "node dist/index.js",
     "dev": "npm run build && npm run serve",
-    "serve": "NODE_ENV=dev NODE_CONFIG_DIR=dist/config nodemon -q -e js,json -w dist/server dist/index.js",
+    "serve": "nodemon -q -e js,json -w dist/server dist/index.js",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
@@ -40,8 +40,8 @@
     "chalk": "^1.1.3",
     "clean-css": "^4.0.9",
     "compression": "^1.6.2",
-    "config": "^1.21.0",
     "cors": "^2.8.1",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "firebase": "^7.4.0",
