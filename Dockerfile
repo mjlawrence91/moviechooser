@@ -17,5 +17,4 @@ RUN npm run build
 
 EXPOSE 8000
 
-# CMD [ "npm", "start" ]
-CMD [ "NODE_CONFIG_DIR=dist/config", "pm2-runtime", "start", "dist/index.js", "-i", "max" ]
+CMD [ "pm2-runtime", "start", "dist/index.js", "-i", "max"]
