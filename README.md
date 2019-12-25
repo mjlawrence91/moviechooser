@@ -2,6 +2,22 @@
 
 **moviechooser** is an app for choosing a random movie night idea from a predefined list.
 
+## Setup
+
+The following environment variables must be setup to run the app. To do this, a `.env` file must be created in the project root (see example `.sample-env` file).
+
+```
+SERVER_PORT=
+FIREBASE_APIKEY=api-key
+FIREBASE_AUTHDOMAIN=project-id.firebaseapp.com
+FIREBASE_DATABASEURL=https://project-id.firebaseio.com
+FIREBASE_PROJECTID=project-id
+FIREBASE_STORAGEBUCKET=project-id.appspot.com
+FIREBASE_MESSAGINGSENDERID=sender-id
+FIREBASE_APPID=app-id
+FIREBASE_MEASUREMENTID=G-measurement-id
+```
+
 ## Technology
 
 ### Frontend
