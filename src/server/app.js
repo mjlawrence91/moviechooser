@@ -9,6 +9,7 @@ import errorHandler from './middleware/errorHandler'
 import routes from './routes'
 import injectInlineStyles from './routes/injectInlineStyles'
 import loadServiceWorker from './routes/loadServiceWorker'
+import config from './utils/config'
 
 const isProduction = process.env.NODE_ENV !== 'dev'
 const staticPath = path.resolve(__dirname, '../client')
@@ -28,6 +29,11 @@ if (!isProduction) {
 const topLevelSection = /([^/]*)(\/|\/index.html)$/
 app.get(topLevelSection, injectInlineStyles)
 app.use('/static', express.static(staticPath))
+
+app.get('/.well-known/acme-challenge/:content', (req, res) => {
+  const letsEncrypt = config.get('LETSENCRYPT_TOKEN')
+  res.send(letsEncrypt)
+})
 
 // Serve Service Worker script.
 app.get('/sw.js', loadServiceWorker)
