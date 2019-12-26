@@ -1,9 +1,0 @@
-archive
-node_modules
-pocs
-
-.DS_Store
-.dockerignore
-Dockerfile
-npm-debug.log
-ROADMAP.md

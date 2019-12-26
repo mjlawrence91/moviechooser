@@ -8,7 +8,8 @@ import { promisify } from 'util'
 import config from './utils/config'
 import app from './app'
 ;(async function () {
-  const port = config.get('SERVER_PORT')
+  // Look for PORT env variable first, for Heroku deployment.
+  const port = config.get('PORT') || config.get('SERVER_PORT')
   const isProduction = config.get('NODE_ENV') !== 'dev'
 
   if (isProduction) {
@@ -27,4 +28,6 @@ import app from './app'
       console.log(chalk.blue(`Server open on port ${port}`))
     })
   }
+
+  process.on('SIGINT', () => process.exit(0))
 })()
