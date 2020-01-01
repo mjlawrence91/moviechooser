@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import { promisify } from 'util'
+import util from 'util'
 import ejs from 'ejs'
 
 const staticPath = path.resolve(__dirname, '../../client')
-const readFile = promisify(fs.readFile)
+const readFile = util.promisify(fs.readFile)
 
 async function injectInlineStyles (req, res) {
   // Read in inline styles.

@@ -1,32 +1,32 @@
 import https from 'https'
 import fs from 'fs'
 import path from 'path'
-
-import chalk from 'chalk'
-import { promisify } from 'util'
+import util from 'util'
 
 import config from './utils/config'
 import app from './app'
 ;(async function () {
-  // Look for PORT env variable first, for Heroku deployment.
-  const port = config.get('PORT') || config.get('SERVER_PORT')
   const isProduction = config.get('NODE_ENV') !== 'dev'
 
+  // Look for PORT env variable first, for Heroku deployment.
+  const port = config.get('PORT') || config.get('SERVER_PORT')
+
+  const logServerOpen = () => {
+    const chalk = require('chalk')
+    console.log(chalk.blue(`Server open on port ${port}`))
+  }
+
   if (isProduction) {
-    app.listen(port, () =>
-      console.log(chalk.blue(`Server open on port ${port}`))
-    )
+    app.listen(port, logServerOpen)
   } else {
-    const readFile = promisify(fs.readFile)
+    const readFile = util.promisify(fs.readFile)
 
     const options = {
       key: await readFile(path.resolve(__dirname, '../../certs/key.pem')),
       cert: await readFile(path.resolve(__dirname, '../../certs/cert.pem'))
     }
 
-    https.createServer(options, app).listen(port, () => {
-      console.log(chalk.blue(`Server open on port ${port}`))
-    })
+    https.createServer(options, app).listen(port, logServerOpen)
   }
 
   process.on('SIGINT', () => process.exit(0))
