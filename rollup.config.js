@@ -1,13 +1,14 @@
 import rimraf from 'rimraf'
 import { terser } from 'rollup-plugin-terser'
 import copy from 'rollup-plugin-copy'
-import minifyStyles from './build/minifyStyles'
 
-// Clean dist directory.
+import buildStyles from './build/buildStyles'
+
+// Clean and recreate dist directory.
 rimraf.sync('dist')
 
-// Build styles.
-minifyStyles()
+// Build styles and inject inline styles into HTML.
+buildStyles()
 
 export default {
   input: 'src/client/App.js',
@@ -29,13 +30,13 @@ export default {
       targets: [
         { src: 'index.js', dest: 'dist' },
         { src: 'src/server/*', dest: 'dist/server' },
-        { src: 'config/**', dest: 'dist/config' },
         {
           src: [
             'src/client/*',
             '!src/client/elements',
             '!src/client/utils',
-            '!src/client/styles'
+            '!src/client/styles',
+            '!src/client/index.template.ejs'
           ],
           dest: 'dist/client'
         }

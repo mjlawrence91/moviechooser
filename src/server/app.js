@@ -1,4 +1,7 @@
+import fs from 'fs'
 import path from 'path'
+import { promisify } from 'util'
+
 import express from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
@@ -7,11 +10,12 @@ import cors from 'cors'
 
 import errorHandler from './middleware/errorHandler'
 import routes from './routes'
-import injectInlineStyles from './routes/injectInlineStyles'
+// import injectInlineStyles from './routes/injectInlineStyles'
 import loadServiceWorker from './routes/loadServiceWorker'
 
 const isProduction = process.env.NODE_ENV !== 'dev'
 const staticPath = path.resolve(__dirname, '../client')
+const readFile = promisify(fs.readFile)
 
 const app = express()
 app.use(helmet())
@@ -24,10 +28,13 @@ if (!isProduction) {
   app.get('/debug', (req, res) => res.status(200).send('Hello World'))
 }
 
-// Serve static files.
-const topLevelSection = /([^/]*)(\/|\/index.html)$/
-app.get(topLevelSection, injectInlineStyles)
+// Serve static files and index.html.
 app.use('/static', express.static(staticPath))
+app.get(/([^/]*)(\/|\/index.html)$/, async (req, res) => {
+  const htmlBuffer = await readFile(`${staticPath}/index.html`)
+  const html = htmlBuffer.toString('utf-8')
+  res.send(html)
+})
 
 // Serve Service Worker script.
 app.get('/sw.js', loadServiceWorker)
