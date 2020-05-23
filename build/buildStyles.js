@@ -1,22 +1,18 @@
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import path from 'path'
-import { promisify } from 'util'
 
 import CleanCSS from 'clean-css'
 import ejs from 'ejs'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const mkdir = promisify(fs.mkdir)
-
 export default async function buildStyles () {
-  return mkdir('dist/client', { recursive: true })
+  return fs
+    .mkdir('dist/client', { recursive: true })
     .then(() => buildMainStyles())
     .then(() => injectInlineStyles())
 }
 
 async function buildMainStyles () {
-  await mkdir(path.join(__dirname, 'dist/client', 'styles'), {
+  await fs.mkdir(path.join(__dirname, 'dist/client', 'styles'), {
     recursive: true
   })
 
@@ -44,15 +40,19 @@ async function injectInlineStyles () {
 }
 
 async function readStyles (path) {
-  return readFile(path, {
-    encoding: 'utf-8'
-  }).catch((error) => console.error(`Error reading file: ${error}`))
+  return fs
+    .readFile(path, {
+      encoding: 'utf-8'
+    })
+    .catch((error) => console.error(`Error reading file: ${error}`))
 }
 
 async function readHTMLTemplate (path) {
-  return readFile(`${path}/index.template.ejs`, {
-    encoding: 'utf-8'
-  }).catch((error) => console.error(`Error reading template: ${error}`))
+  return fs
+    .readFile(`${path}/index.template.ejs`, {
+      encoding: 'utf-8'
+    })
+    .catch((error) => console.error(`Error reading template: ${error}`))
 }
 
 function compileTemplate (html, styles) {
@@ -67,7 +67,7 @@ function minifyStyles (styles) {
 }
 
 async function writeNewFile (content, path) {
-  return writeFile(path, content, 'utf-8').catch((error) =>
-    console.error(`Error writing file: ${error}`)
-  )
+  return fs
+    .writeFile(path, content, 'utf-8')
+    .catch((error) => console.error(`Error writing file: ${error}`))
 }

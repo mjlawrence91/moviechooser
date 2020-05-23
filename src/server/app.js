@@ -1,6 +1,5 @@
-import fs from 'fs'
+import { promises as fs } from 'fs'
 import path from 'path'
-import { promisify } from 'util'
 
 import express from 'express'
 import bodyParser from 'body-parser'
@@ -10,12 +9,10 @@ import cors from 'cors'
 
 import errorHandler from './middleware/errorHandler'
 import routes from './routes'
-// import injectInlineStyles from './routes/injectInlineStyles'
 import loadServiceWorker from './routes/loadServiceWorker'
 
 const isProduction = process.env.NODE_ENV !== 'dev'
 const staticPath = path.resolve(__dirname, '../client')
-const readFile = promisify(fs.readFile)
 
 const app = express()
 app.use(helmet())
@@ -31,7 +28,7 @@ if (!isProduction) {
 // Serve static files and index.html.
 app.use('/static', express.static(staticPath))
 app.get(/([^/]*)(\/|\/index.html)$/, async (req, res) => {
-  const htmlBuffer = await readFile(`${staticPath}/index.html`)
+  const htmlBuffer = await fs.readFile(`${staticPath}/index.html`)
   const html = htmlBuffer.toString('utf-8')
   res.send(html)
 })
