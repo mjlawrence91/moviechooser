@@ -6,8 +6,11 @@
 .Spotlight-V100
 .Trashes
 .env
+.firebase
 ehthumbs.db
 Thumbs.db
+
+*.log
 
 archive
 bower_components
