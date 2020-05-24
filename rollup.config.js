@@ -1,11 +1,6 @@
-import rimraf from 'rimraf'
 import { terser } from 'rollup-plugin-terser'
 import copy from 'rollup-plugin-copy'
-
 import buildStyles from './build/buildStyles'
-
-// Clean and recreate dist directory.
-rimraf.sync('dist')
 
 // Build styles and inject inline styles into HTML.
 buildStyles()
@@ -28,8 +23,10 @@ export default {
     copy({
       copyOnce: true,
       targets: [
-        { src: 'index.js', dest: 'dist' },
-        { src: 'src/server/*', dest: 'dist/server' },
+        {
+          src: ['./package.json', './.env'],
+          dest: 'dist'
+        },
         {
           src: [
             'src/client/*',
