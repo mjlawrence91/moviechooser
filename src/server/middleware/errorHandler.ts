@@ -1,6 +1,12 @@
+import { Request, Response, NextFunction } from 'express'
 import chalk from 'chalk'
 
-export default function errorHandler (error, req, res, next) {
+export default function errorHandler (
+  error: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   if (error) {
     res
       .status(500)

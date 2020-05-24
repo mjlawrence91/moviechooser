@@ -1,9 +1,10 @@
+import path from 'path'
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
 export default {
-  get (key) {
+  get (key: string) {
     if (!process.env[key]) {
       return null
     }
@@ -11,7 +12,7 @@ export default {
     return process.env[key]
   },
 
-  has (key) {
+  has (key: string) {
     return !!process.env[key]
   }
 }

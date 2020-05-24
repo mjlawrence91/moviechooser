@@ -1,16 +1,17 @@
+import { Request, Response } from 'express'
 import db from '../modules/DBConnection'
 
 export default {
-  async read (req, res) {
+  async read (req: Request, res: Response) {
     const movies = await db
       .ref('/')
       .once('value')
-      .then(snapshot => snapshot.val())
+      .then((snapshot) => snapshot.val())
 
     res.status(200).send(movies)
   },
 
-  async create (req, res) {
+  async create (req: Request, res: Response) {
     const body = Object.keys(req.body).length ? req.body : null
 
     if (body) {
@@ -24,7 +25,7 @@ export default {
     }
   },
 
-  async delete (req, res) {
+  async delete (req: Request, res: Response) {
     const keyToDelete = req.params.id
 
     try {

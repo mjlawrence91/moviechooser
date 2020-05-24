@@ -1,7 +1,9 @@
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/database'
 
 import config from '../utils/config'
+
+console.log(config.get('FIREBASE_DATABASEURL'))
 
 firebase.initializeApp({
   apiKey: config.get('FIREBASE_APIKEY'),
