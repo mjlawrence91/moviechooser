@@ -1,64 +1,68 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Movie Chooser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Movie Chooser" />
+    <link rel="manifest" href="/manifest.json" />
 
-<head>
-  <title>Movie Chooser</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Movie Chooser" />
-  <link rel="manifest" href="static/manifest.json" />
+    <%-styles %>
 
-  <%-styles %>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <script defer src="/App.js"></script>
+  </head>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
-  <link rel="stylesheet" href="static/styles/styles.css" />
-  <script defer src="static/App.js"></script>
-</head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">Movie Chooser</h1>
+    </header>
 
-<body>
-  <header class="header">
-    <h1 class="header__title">Movie Chooser</h1>
-  </header>
-
-  <div class="container">
-    <div class="row">
-      <div class="well">
-        <form novalidate>
-          <fieldset>
-            <div class="form-group">
-              <input type="text" class="form-control" name="movie" required />
-              <span class="bar"></span>
-              <label for="movie" class="control-label">Movie Name</label>
-            </div>
-            <div class="form-group">
-              <select class="form-control" name="who" required>
-                <option value=""></option>
-              </select>
-              <span class="bar"></span>
-              <label for="who" class="control-label">Who?</label>
-            </div>
-            <div class="button-group">
-              <button class="ripple btn-primary" id="add">Add</button>
-              <button class="ripple btn-default" id="choose">Choose</button>
-            </div>
-            <div class="filter-group">
-              <p class="filter-label">Filters</p>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="well movie-list" id="selection">
-        <div class="preload active">
-          <div class="preload-text">Loading movies...</div>
+    <div class="container">
+      <div class="row">
+        <div class="well">
+          <form novalidate>
+            <fieldset>
+              <div class="form-group">
+                <input type="text" class="form-control" name="movie" required />
+                <span class="bar"></span>
+                <label for="movie" class="control-label">Movie Name</label>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="who" required>
+                  <option value=""></option>
+                </select>
+                <span class="bar"></span>
+                <label for="who" class="control-label">Who?</label>
+              </div>
+              <div class="button-group">
+                <button class="ripple btn-primary" id="add">Add</button>
+                <button class="ripple btn-default" id="choose">Choose</button>
+              </div>
+              <div class="filter-group">
+                <p class="filter-label">Filters</p>
+              </div>
+            </fieldset>
+          </form>
         </div>
-        <movie-list url="/api/movies"></movie-list>
+      </div>
+
+      <div class="row">
+        <div class="well movie-list" id="selection">
+          <div class="preload active">
+            <div class="preload-text">Loading movies...</div>
+          </div>
+          <movie-list url="/movies"></movie-list>
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
