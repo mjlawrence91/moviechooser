@@ -4,7 +4,7 @@ module.exports = {
     es6: true,
     node: true
   },
-  parser: "babel-eslint",
-  extends: ["standard"],
+  parser: '@babel/eslint-parser',
+  extends: ['standard'],
   rules: {}
-};
+}
